@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 — Oral Set as MCQ (EASA-style)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090b;
+    --panel: #0e1316;
+    --panel-2: #121820;
+    --line: #223038;
+    --amber: #ffb020;
+    --amber-dim: #8a5f18;
+    --cyan: #35e6e0;
+    --cyan-dim: #1a6e6b;
+    --red: #ff4d4d;
+    --text: #d9e4e6;
+    --text-dim: #7d9296;
+    --font-head: 'Chakra Petch', 'Sarabun', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Sarabun', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1ee;
+      --panel: #ffffff;
+      --panel-2: #f4f6f4;
+      --line: #c6cdc6;
+      --text: #16211f;
+      --text-dim: #55625f;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1ee;
+    --panel: #ffffff;
+    --panel-2: #f4f6f4;
+    --line: #c6cdc6;
+    --text: #16211f;
+    --text-dim: #55625f;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-attachment: fixed;
+    background-position: center;
+    opacity: 1;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,176,32,0.05), transparent 60%);
+    z-index: 0;
+  }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 16px 48px;
+  }
+
+  /* Header */
+  .hud {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    margin-bottom: 14px;
+  }
+  .hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hud-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--cyan);
+    margin: 0 0 4px;
+  }
+  .hud-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0;
+    color: var(--text);
+  }
+  .hud-title .th {
+    display: block;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .hud-controls {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .pill-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 6px 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .pill-btn.active {
+    color: var(--bg);
+    background: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .pill-btn:focus-visible, button:focus-visible, .opt:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  .meter-row {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .meter {
+    flex: 1;
+    height: 6px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber-dim), var(--amber));
+    width: 0%;
+    transition: width .3s ease;
+  }
+
+  /* Question card */
+  .card {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    margin-bottom: 14px;
+  }
+  .qnum {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin: 0 0 8px;
+  }
+  .qtext {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 4px;
+  }
+  .qtext.th {
+    display: block;
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+  .options {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .opt {
+    text-align: left;
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: var(--radius);
+    padding: 11px 12px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .opt .k {
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .opt .body { flex: 1; }
+  .opt .body .th {
+    display: block;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--amber-dim); }
+  .opt.has-diagram { align-items: center; }
+  .opt.has-diagram .body { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .opt .diagram { flex-shrink: 0; width: 84px; }
+  .opt .diagram svg { width: 100%; height: auto; display: block; }
+  .opt:disabled { cursor: default; }
+  .opt.correct {
+    border-color: var(--cyan);
+    background: rgba(53,230,224,0.08);
+  }
+  .opt.correct .k { color: var(--cyan); }
+  .opt.wrong {
+    border-color: var(--red);
+    background: rgba(255,77,77,0.08);
+  }
+  .opt.wrong .k { color: var(--red); }
+  .opt.dim { opacity: .55; }
+
+  .feedback {
+    margin-top: 14px;
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.06); }
+  .feedback.bad { border: 1px solid var(--red); background: rgba(255,77,77,0.06); }
+  .feedback .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .feedback.ok .lbl { color: var(--cyan); }
+  .feedback.bad .lbl { color: var(--red); }
+  .feedback .exp-th {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line);
+    font-family: 'Sarabun', sans-serif;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  .cite {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    border-radius: var(--radius);
+    padding: 2px 7px;
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .next-btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    background: var(--amber);
+    color: #17110a;
+    border: none;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: none;
+  }
+  .next-btn.show { display: inline-block; }
+  .next-btn:active { transform: translateY(1px); }
+
+  /* Results */
+  .results { display: none; }
+  .results.show { display: block; }
+  .score-panel {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .score-big {
+    font-family: var(--font-head);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 6px 0;
+  }
+  .score-big.pass { color: var(--cyan); }
+  .score-big.fail { color: var(--red); }
+  .score-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+  .badge {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .badge.pass { color: var(--cyan); border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.08); }
+  .badge.fail { color: var(--red); border: 1px solid var(--red); background: rgba(255,77,77,0.08); }
+  .threshold-note {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .action-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    color: var(--amber);
+    padding: 9px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .action-btn.primary {
+    background: var(--amber);
+    color: #17110a;
+    border-color: var(--amber);
+  }
+
+  .review-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin: 20px 2px 8px;
+  }
+  .review-item {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+  .review-item .rq {
+    font-family: var(--font-head);
+    font-size: 14.5px;
+    margin: 0 0 6px;
+  }
+  .review-item .rmark {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    margin-right: 8px;
+  }
+  .rmark.correct-mark { color: var(--cyan); }
+  .rmark.wrong-mark { color: var(--red); }
+  .review-item .ra {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 4px 0;
+  }
+  .review-item .ra b { color: var(--text); font-weight: 500; }
+  .review-item .rexp {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--line);
+  }
+
+  footer {
+    margin-top: 24px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 420px) {
+    .hud-title { font-size: 19px; }
+    .qtext { font-size: 16.5px; }
+    .score-big { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud">
+    <div class="hud-top">
+      <div>
+        <p class="hud-tag">PART66 · CAT-B1 · MODULE 4 — REAL EXAM SET, CONVERTED TO MCQ</p>
+        <h1 class="hud-title">Oral/Recall Set — as Multiple Choice
+          <span class="th" id="titleTh">ชุดข้อสอบจริง (ปากเปล่า) — แปลงเป็นปรนัย</span>
+        </h1>
+        <p style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);margin:8px 2px 0;line-height:1.6;">
+          Distractors built following EASA's own GM Question Bank methodology (GM Question Bank, 17/07/2009 — homogeneous, plausible, justified false answers; no absolute determiners; balanced length). Where a question overlaps with the separately-highlighted MCQ sheet, that sheet's real options are reused directly instead of invented ones.
+          <span class="th" style="display:block;font-family:'Sarabun',sans-serif;margin-top:4px;">ตัวลวงสร้างตามแนวทางของ EASA เอง (เอกสาร GM Question Bank, 17/07/2009 — ตัวเลือกต้องเป็นเนื้อหาเดียวกัน สมเหตุสมผล มีเหตุผลรองรับ ไม่ใช้คำเด็ดขาดอย่าง "เสมอ/ไม่เคย" และความยาวใกล้เคียงกัน) ข้อไหนซ้ำกับชุดปรนัยที่ไฮไลท์คำตอบไว้แล้ว ใช้ตัวเลือกจริงจากชุดนั้นแทนการแต่งขึ้นเอง</span>
+        </p>
+      </div>
+      <div class="hud-controls">
+        <button class="pill-btn active" id="langEn" onclick="setLang('en')">EN</button>
+        <button class="pill-btn" id="langTh" onclick="setLang('th')">TH</button>
+      </div>
+    </div>
+    <div class="meter-row">
+      <span id="progressLabel">Q 1 / 20</span>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+      <span id="scoreLabel">0 correct</span>
+    </div>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div class="results" id="results">
+    <div class="score-panel">
+      <div class="score-sub" id="resultTag">RESULT</div>
+      <div class="score-big" id="scoreBig">0 / 20</div>
+      <div class="score-sub" id="scorePct">0%</div>
+      <div class="badge" id="passBadge">PASS</div>
+      <div class="threshold-note" id="thresholdNote">Pass threshold: 75%</div>
+    </div>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="restartQuiz(true)">↻ Shuffle &amp; Retake</button>
+      <button class="action-btn" onclick="restartQuiz(false)">Retake (same order)</button>
+    </div>
+    <div class="review-title" id="reviewTitle">— FULL ANSWER REVIEW —</div>
+    <div id="reviewList"></div>
+  </div>
+
+  <footer>
+    Source: Module 4 — Electronic Fundamentals CAT-B1.pdf (176 pages) · distractors follow EASA's GM Question Bank methodology; overlapping items reuse the real highlighted-sheet options · Fisher–Yates shuffle
+  </footer>
+</div>
+
+<script>
+/* ---------- Transistor symbol SVG (for the diagram question) ---------- */
+function transistorSVG(topLab, midLab, botLab) {
+  return `<svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--text)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <line x1="45" y1="20" x2="45" y2="90"/>
+      <line x1="15" y1="55" x2="45" y2="55"/>
+      <line x1="45" y1="35" x2="85" y2="15"/>
+      <line x1="85" y1="15" x2="85" y2="3"/>
+      <line x1="45" y1="75" x2="85" y2="95"/>
+      <line x1="85" y1="95" x2="85" y2="107"/>
+      <polygon points="63,63 74,68 68,77" fill="var(--text)" stroke="none"/>
+    </g>
+    <text x="88" y="12" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${topLab}</text>
+    <text x="2" y="50" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${midLab}</text>
+    <text x="88" y="105" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${botLab}</text>
+  </svg>`;
+}
+
+/* ---------- Question bank ---------- */
+/* correctIndex refers to the index within options[] as written below (pre-shuffle) */
+const BANK = [
+{
+  page: 20,
+  en: { q: "What is the voltage drop across a germanium diode?",
+    options: ["0.5 V", "0.3 V", "0.7 V"],
+    explain: "The book states the forward switch-on voltage directly: Germanium = 0.3V (Silicon = 0.7V, for comparison). These three values (0.5/0.3/0.7) are the exact option set used on the original photographed sheet for this question, reused here since it's the same fact being asked."
+  },
+  th: { q: "แรงดันตกคร่อม (voltage drop) ของไดโอดเจอร์เมเนียมเท่าใด?",
+    options: ["0.5 V", "0.3 V", "0.7 V"],
+    explain: "หนังสือระบุแรงดันเปิดนำกระแสไว้ตรงๆ: เจอร์เมเนียม = 0.3V (เทียบกับซิลิคอน = 0.7V) ตัวเลือกสามค่านี้ (0.5/0.3/0.7) เป็นชุดเดียวกับที่ใช้ในภาพคำถามต้นฉบับสำหรับข้อนี้ นำมาใช้ซ้ำเพราะเป็นข้อเท็จจริงเดียวกัน"
+  },
+  correctIndex: 1
+},
+{
+  page: 28,
+  en: { q: "In which direction or directions should a diode be tested for proper functionality?",
+    options: [
+      "Forward direction only",
+      "Reverse direction only",
+      "Both forward and reverse directions"
+    ],
+    explain: "A functional diode conducts (low resistance) in forward bias and blocks (very high resistance, near open circuit) in reverse bias. Checking only one direction can't rule out a shorted or open diode, so older EASA papers on this topic phrase the correct option as testing both directions."
+  },
+  th: { q: "ควรทดสอบไดโอดในทิศทางใดหรือหลายทิศทางเพื่อตรวจสอบว่าทำงานปกติ?",
+    options: [
+      "ทิศทาง forward เท่านั้น",
+      "ทิศทาง reverse เท่านั้น",
+      "ทั้งสองทิศทาง forward และ reverse"
+    ],
+    explain: "ไดโอดที่ทำงานปกติจะนำกระแส (ความต้านทานต่ำ) เมื่อ forward bias และกั้นกระแส (ความต้านทานสูงมาก เกือบเป็นวงจรเปิด) เมื่อ reverse bias การทดสอบเพียงทิศทางเดียวไม่สามารถตัดความเป็นไปได้ว่าไดโอดช็อตหรือขาดได้ ข้อสอบ EASA เก่าๆ ในหัวข้อนี้จึงตั้งคำตอบที่ถูกเป็นการทดสอบทั้งสองทิศทาง"
+  },
+  correctIndex: 2
+},
+{
+  page: 15,
+  en: { q: "To create a silicon p-type conductor, which material is used for doping the silicon?",
+    options: [
+      "Beryllium with 2 valence electrons",
+      "Boron with 3 valence electrons",
+      "Phosphorus with 5 valence electrons"
+    ],
+    explain: "The book lists Boron (Group 3, 3 valence electrons) for P-type doping — it creates an extra hole (an \"acceptor\") once bonded into the lattice. These three exact materials/electron-counts are reused from the sibling N-type question on the original highlighted MCQ sheet (which asks the same thing for N-type, with Phosphorus as its correct answer) — swapping which one is correct is a natural, EASA-style way to pair the two questions."
+  },
+  th: { q: "การสร้างสารกึ่งตัวนำซิลิคอนชนิด P (p-type) ใช้วัสดุใดในการโดป (dope) ซิลิคอน?",
+    options: [
+      "เบริลเลียม ซึ่งมีอิเล็กตรอนวงนอก 2 ตัว",
+      "โบรอน ซึ่งมีอิเล็กตรอนวงนอก 3 ตัว",
+      "ฟอสฟอรัส ซึ่งมีอิเล็กตรอนวงนอก 5 ตัว"
+    ],
+    explain: "หนังสือระบุโบรอน (กลุ่ม 3, อิเล็กตรอนวงนอก 3 ตัว) สำหรับโดปชนิด P เพราะสร้างโฮลส่วนเกิน (\"acceptor\") เมื่อเข้าไปอยู่ในโครงผลึก วัสดุ/จำนวนอิเล็กตรอนทั้งสามตัวนี้นำมาจากคำถามคู่แฝดเรื่อง n-type ในภาพชุดปรนัยต้นฉบับที่ไฮไลท์ไว้จริง (ซึ่งถามแบบเดียวกันแต่คำตอบที่ถูกคือฟอสฟอรัส) การสลับว่าใครถูกใครผิดเป็นวิธีจับคู่คำถามแบบที่ EASA มักใช้"
+  },
+  correctIndex: 1
+},
+{
+  page: 28,
+  en: { q: "What does the display on a digital multimeter show when testing a silicon rectifier diode in the reverse direction?",
+    options: [
+      "A steady forward-bias reading (~0.7 V)",
+      "'OL', or a high voltage near the meter's test limit (~2.5V)",
+      "0 V, as if short-circuited"
+    ],
+    explain: "The book's worked example shows a good diode in reverse bias may read about 2.5V on some meters, and separately notes the display may also show 'OL' — both mean a very high resistance path. A 0.7V reading is what you'd see in forward bias instead, and 0V would mean the diode is shorted, not functioning correctly."
+  },
+  th: { q: "หน้าจอมัลติมิเตอร์ดิจิทัล (DMM) แสดงผลอย่างไรเมื่อทดสอบไดโอดเรียงกระแสซิลิคอนในทิศทาง reverse?",
+    options: [
+      "ค่าคงที่แบบ forward bias (~0.7 V)",
+      "'OL' หรือแรงดันสูงใกล้ขีดจำกัดของมิเตอร์ (~2.5V)",
+      "0 V เหมือนไฟฟ้าลัดวงจร"
+    ],
+    explain: "ตัวอย่างในหนังสือแสดงว่าไดโอดที่ดีเมื่อ reverse bias อาจอ่านค่าได้ประมาณ 2.5V บนมิเตอร์บางรุ่น และยังระบุแยกว่าหน้าจออาจขึ้น 'OL' ได้ด้วย ทั้งสองแบบหมายถึงเส้นทางความต้านทานที่สูงมาก ส่วนค่า 0.7V คือค่าที่จะเห็นตอน forward bias ต่างหาก และ 0V หมายถึงไดโอดช็อต ไม่ใช่ทำงานปกติ"
+  },
+  correctIndex: 1
+},
+{
+  page: "20–21",
+  en: { q: "What is the voltage drop at a series connection of 4 germanium diodes?",
+    options: ["0.3 V", "1.2 V", "2.8 V"],
+    explain: "Diodes in series each carry the same current, and the total forward drop is the sum of each diode's own drop. With germanium's 0.3V forward voltage, four in series drop 4 × 0.3V = 1.2V. 0.3V is only a single diode's drop, and 2.8V doesn't match the arithmetic at all — a classic distractor pattern in these series-diode questions."
+  },
+  th: { q: "แรงดันตกคร่อมของไดโอดเจอร์เมเนียม 4 ตัวต่ออนุกรมกันเท่าใด?",
+    options: ["0.3 V", "1.2 V", "2.8 V"],
+    explain: "ไดโอดที่ต่ออนุกรมกันจะมีกระแสไหลผ่านเท่ากันทุกตัว และแรงดันตกคร่อมรวมคือผลรวมของแรงดันตกคร่อมของแต่ละตัว เมื่อแรงดัน forward ของเจอร์เมเนียมคือ 0.3V ไดโอด 4 ตัวต่ออนุกรมจะตกคร่อมรวม 4 × 0.3V = 1.2V ค่า 0.3V เป็นเพียงแรงดันของไดโอดตัวเดียว ส่วน 2.8V ไม่ตรงกับการคำนวณเลย ซึ่งเป็นรูปแบบตัวลวงคลาสสิกของโจทย์ไดโอดอนุกรมแบบนี้"
+  },
+  correctIndex: 1
+},
+{
+  page: 20,
+  en: { q: "Which statement is correct when a P-N junction is biased in reverse?",
+    options: [
+      "The depletion region narrows and current increases.",
+      "The depletion region widens and only a negligible leakage current flows.",
+      "The junction automatically switches to forward bias."
+    ],
+    explain: "The book states it directly: reverse bias pulls majority carriers away from the junction, widening the depletion region, with only a negligible current permitted from minority-carrier leakage (usually no more than 100μA). The other two options describe forward-bias behavior or something that simply doesn't happen."
+  },
+  th: { q: "ข้อความใดถูกต้องเมื่อรอยต่อ P-N (P-N junction) ถูกไบแอสในทิศทาง reverse?",
+    options: [
+      "depletion region แคบลงและกระแสเพิ่มขึ้น",
+      "depletion region ขยายกว้างขึ้นและมีเพียงกระแสรั่วไหลเล็กน้อยเท่านั้นที่ไหลผ่าน",
+      "รอยต่อจะสลับไปเป็น forward bias เอง"
+    ],
+    explain: "หนังสือระบุไว้ตรงๆ ว่า reverse bias จะดึงพาหะส่วนใหญ่ออกห่างจากรอยต่อ ทำให้ depletion region ขยายกว้างขึ้น มีกระแสไหลได้เพียงเล็กน้อยมาก (โดยทั่วไปไม่เกิน 100μA) จากการรั่วไหลของพาหะส่วนน้อย ส่วนอีกสองตัวเลือกอธิบายพฤติกรรมตอน forward bias หรือสิ่งที่ไม่เกิดขึ้นจริง"
+  },
+  correctIndex: 1
+},
+{
+  page: 49,
+  en: { q: "What is the voltage drop at a series connection of 3 silicon diodes?",
+    options: ["0.7 V", "1.4 V", "2.1 V"],
+    explain: "This is a worked example straight from the book: a single silicon diode drops 0.7V, so 3 in series drop 3 × 0.7V = 2.1V. 0.7V is just one diode, and 1.4V is only 2 diodes' worth — both common miscount distractors."
+  },
+  th: { q: "แรงดันตกคร่อมของไดโอดซิลิคอน 3 ตัวต่ออนุกรมกันเท่าใด?",
+    options: ["0.7 V", "1.4 V", "2.1 V"],
+    explain: "นี่คือตัวอย่างการคำนวณจากหนังสือโดยตรง: ไดโอดซิลิคอนตัวเดียวตกคร่อม 0.7V ดังนั้น 3 ตัวอนุกรมจะตกคร่อม 3 × 0.7V = 2.1V ค่า 0.7V คือไดโอดตัวเดียว ส่วน 1.4V คือแค่ 2 ตัว ทั้งสองเป็นตัวลวงจากการนับผิดที่พบบ่อย"
+  },
+  correctIndex: 2
+},
+{
+  page: 46,
+  en: { q: "What are the three leads of a TRIAC called?",
+    options: [
+      "MT1, MT2 and Gate",
+      "A1, A2 and G",
+      "Anode, Cathode and Gate"
+    ],
+    explain: "This book's own Triac circuit symbol (Figure 42, p.46) labels the leads A1, A2 and G — confirmed by viewing the figure directly. \"MT1/MT2/Gate\" is the standard terminology used in most other electronics textbooks (and is what you'll find in general TRIAC references online), but it's not what this specific book uses. \"Anode/Cathode/Gate\" belongs to a different device (SCR/thyristor), not a TRIAC, which is bidirectional and has no true anode or cathode."
+  },
+  th: { q: "ขาทั้งสามของ TRIAC เรียกว่าอะไร?",
+    options: [
+      "MT1, MT2 และ Gate",
+      "A1, A2 และ G",
+      "Anode, Cathode และ Gate"
+    ],
+    explain: "สัญลักษณ์วงจร Triac ของหนังสือเล่มนี้เอง (Figure 42 หน้า 46) ระบุขาไว้ว่า A1, A2 และ G — ยืนยันจากการเปิดดูภาพจริง ส่วน \"MT1/MT2/Gate\" เป็นศัพท์มาตรฐานที่ตำราอื่นๆ ส่วนใหญ่ใช้ (และเป็นคำที่เจอทั่วไปเมื่อค้นหา TRIAC ในอินเทอร์เน็ต) แต่ไม่ใช่ที่หนังสือเล่มนี้ใช้เอง ส่วน \"Anode/Cathode/Gate\" เป็นของอุปกรณ์คนละชนิด (SCR/thyristor) ไม่ใช่ TRIAC ซึ่งนำกระแสได้สองทิศทางจึงไม่มี anode หรือ cathode ที่แท้จริง"
+  },
+  correctIndex: 1
+},
+{
+  page: 76,
+  en: { q: "What else is a bipolar transistor called?",
+    options: ["FET", "BJT", "SCR"],
+    explain: "The book uses this abbreviation directly when introducing coupled amplifiers: the Common-Emitter configuration is described as \"a Bi-polar junction transistor (BJT) arrangement.\" FET (Field-Effect Transistor) and SCR (thyristor) are both real, different semiconductor devices — good distractors precisely because they're easy to confuse with BJT if the acronyms aren't solid."
+  },
+  th: { q: "ทรานซิสเตอร์ชนิดไบโพลาร์ (bipolar transistor) มีชื่อเรียกอื่นว่าอะไร?",
+    options: ["FET", "BJT", "SCR"],
+    explain: "หนังสือใช้คำย่อนี้โดยตรงตอนแนะนำวงจรขยายแบบต่อพ่วง: วงจร Common-Emitter ถูกอธิบายว่าเป็น \"การจัดวงจรแบบ Bi-polar junction transistor (BJT)\" ส่วน FET (Field-Effect Transistor) และ SCR (thyristor) ต่างก็เป็นอุปกรณ์สารกึ่งตัวนำจริงแต่คนละชนิด เป็นตัวลวงที่ดีเพราะสับสนกับ BJT ได้ง่ายถ้าจำตัวย่อไม่แม่น"
+  },
+  correctIndex: 1
+},
+{
+  page: 53,
+  en: { q: "What is the base-emitter voltage to operate a silicon transistor?",
+    options: ["0.3 V", "0.5 V", "0.7 V"],
+    explain: "Just like a silicon diode's forward barrier, the Base-Emitter junction of a silicon transistor must be forward biased with at least 0.7V before the transistor conducts. 0.3V is germanium's figure (for a diode, not this transistor), and 0.5V doesn't correspond to either material in this book."
+  },
+  th: { q: "แรงดันเบส-อิมิตเตอร์ที่ใช้ในการทำงานของทรานซิสเตอร์ซิลิคอนคือเท่าใด?",
+    options: ["0.3 V", "0.5 V", "0.7 V"],
+    explain: "เช่นเดียวกับ forward barrier ของไดโอดซิลิคอน รอยต่อเบส-อิมิตเตอร์ของทรานซิสเตอร์ซิลิคอนต้องได้รับ forward bias อย่างน้อย 0.7V ก่อนทรานซิสเตอร์จึงจะนำกระแส ค่า 0.3V เป็นของเจอร์เมเนียม (สำหรับไดโอด ไม่ใช่ทรานซิสเตอร์ตัวนี้) ส่วน 0.5V ไม่ตรงกับวัสดุใดเลยในหนังสือเล่มนี้"
+  },
+  correctIndex: 2
+},
+{
+  page: 53,
+  en: { q: "What are the three leads of a bipolar transistor called?",
+    options: [
+      "Anode, Cathode and Gate",
+      "Base, Collector and Emitter",
+      "Source, Drain and Gate"
+    ],
+    explain: "The book's NPN Transistor Construction figure labels all three: Base, Collector and Emitter. \"Anode/Cathode/Gate\" belongs to thyristor-family devices, and \"Source/Drain/Gate\" belongs to a FET — both are real terminal sets, just for different device families, which is exactly why they make effective distractors here."
+  },
+  th: { q: "ขาทั้งสามของทรานซิสเตอร์ไบโพลาร์เรียกว่าอะไร?",
+    options: [
+      "Anode, Cathode และ Gate",
+      "เบส (Base), คอลเลกเตอร์ (Collector) และอิมิตเตอร์ (Emitter)",
+      "Source, Drain และ Gate"
+    ],
+    explain: "แผนภาพโครงสร้างทรานซิสเตอร์ NPN ในหนังสือระบุขาทั้งสามไว้ชัดเจน: เบส คอลเลกเตอร์ และอิมิตเตอร์ ส่วน \"Anode/Cathode/Gate\" เป็นของกลุ่มอุปกรณ์ thyristor และ \"Source/Drain/Gate\" เป็นของ FET ทั้งสองชุดเป็นชื่อขาจริงแต่คนละตระกูลอุปกรณ์ จึงเป็นตัวลวงที่ใช้ได้ผลดีในข้อนี้"
+  },
+  correctIndex: 1
+},
+{
+  page: 53,
+  diagrams: [
+    { top: "B", mid: "C", bot: "E" },
+    { top: "E", mid: "B", bot: "C" },
+    { top: "C", mid: "B", bot: "E" }
+  ],
+  en: { q: "In which picture are the leads of the transistor correctly labeled?",
+    options: ["Picture B", "Picture C", "Picture A"],
+    explain: "The book's own transistor construction diagram (Figure 45) fixes the layout: the horizontal lead into the base bar is always the Base, the top diagonal lead is the Collector, and the bottom diagonal lead (the one with the arrow) is the Emitter. Only Picture A follows that layout — Picture B swaps Base and Collector, and Picture C swaps Collector and Emitter."
+  },
+  th: { q: "ภาพใดที่มีการติดฉลากขาทรานซิสเตอร์ถูกต้อง?",
+    options: ["ภาพ B", "ภาพ C", "ภาพ A"],
+    explain: "แผนภาพโครงสร้างทรานซิสเตอร์ในหนังสือ (Figure 45) กำหนดผังไว้ตายตัว: ขาที่ต่อในแนวนอนเข้ากับแท่งเบสคือเบสเสมอ ขาทแยงด้านบนคือคอลเลกเตอร์ และขาทแยงด้านล่าง (ที่มีลูกศร) คืออิมิตเตอร์ มีเพียงภาพ A เท่านั้นที่ตรงตามผังนี้ — ภาพ B สลับเบสกับคอลเลกเตอร์ ส่วนภาพ C สลับคอลเลกเตอร์กับอิมิตเตอร์"
+  },
+  correctIndex: 2
+},
+{
+  page: 93,
+  en: { q: "What connections does an operational amplifier have?",
+    options: [
+      "Two inputs and one output",
+      "Two inputs, one output, and two DC supply pins",
+      "One input, one output, and one supply pin"
+    ],
+    explain: "The book states the standard op-amp has an inverting input, a non-inverting input, and one output — plus \"the typical Op-amp requires two DC supply voltages. One is positive, and the other is negative.\" Stopping at \"two inputs and one output\" is a commonly seen incomplete answer that leaves out the supply pins."
+  },
+  th: { q: "ออปแอมป์ (operational amplifier) มีขาต่อ (connections) อะไรบ้าง?",
+    options: [
+      "อินพุตสองขาและเอาต์พุตหนึ่งขา",
+      "อินพุตสองขา เอาต์พุตหนึ่งขา และขาไฟเลี้ยงกระแสตรงสองขา",
+      "อินพุตหนึ่งขา เอาต์พุตหนึ่งขา และขาไฟเลี้ยงหนึ่งขา"
+    ],
+    explain: "หนังสือระบุว่าออปแอมป์มาตรฐานมีขาอินพุตกลับเฟส ขาอินพุตไม่กลับเฟส และขาเอาต์พุตหนึ่งขา บวกกับ \"ออปแอมป์ทั่วไปต้องการแรงดันไฟเลี้ยงกระแสตรงสองค่า ค่าหนึ่งเป็นบวก อีกค่าเป็นลบ\" การตอบแค่ \"อินพุตสองขาและเอาต์พุตหนึ่งขา\" เป็นคำตอบที่ไม่ครบซึ่งพบได้บ่อย เพราะขาดขาไฟเลี้ยงไป"
+  },
+  correctIndex: 1
+},
+{
+  page: 106,
+  en: { q: "Where is the input signal applied at an inverting op amplifier?",
+    options: [
+      "At the non-inverting input, through the input resistor Ri",
+      "At the inverting input, through the input resistor Ri",
+      "Equally split between both inputs"
+    ],
+    explain: "The book describes the inverting amplifier configuration directly: the input signal is applied through a series input resistor (Ri) to the inverting input (-); the non-inverting input (+) is grounded, not where the signal enters."
+  },
+  th: { q: "สัญญาณอินพุตของออปแอมป์แบบกลับเฟส (inverting op amplifier) ถูกป้อนเข้าที่ใด?",
+    options: [
+      "ที่ขาไม่กลับเฟส ผ่านตัวต้านทานอินพุต Ri",
+      "ที่ขากลับเฟส ผ่านตัวต้านทานอินพุต Ri",
+      "แบ่งเข้าทั้งสองขาเท่าๆ กัน"
+    ],
+    explain: "หนังสืออธิบายวงจรขยายแบบกลับเฟสไว้ตรงๆ ว่าสัญญาณอินพุตถูกป้อนผ่านตัวต้านทานอินพุตแบบอนุกรม (Ri) เข้าไปที่ขากลับเฟส (-) ส่วนขาไม่กลับเฟส (+) ต่อลงกราวด์ ไม่ใช่จุดที่สัญญาณเข้า"
+  },
+  correctIndex: 1
+},
+{
+  page: "93–94",
+  en: { q: "What is the output signal of an ideal op-amp without feedback, if the non-inverting input is grounded and a voltage of +2 V is supplied to the inverting input?",
+    options: ["+Vs", "0 Volt", "-Vs"],
+    explain: "With no feedback, the ideal op-amp's infinite open-loop gain amplifies even the tiniest input difference to its limit. Here the inverting (-) input is higher than the grounded non-inverting (+) input, so the output is driven hard negative — saturating at -Vs. This is the same question, with the same three options, as it appeared on the original photographed MCQ sheet."
+  },
+  th: { q: "สัญญาณเอาต์พุตของออปแอมป์อุดมคติ (ideal op-amp) ที่ไม่มีฟีดแบ็กเป็นอย่างไร หากอินพุตไม่กลับเฟสต่อกราวด์ และป้อนแรงดัน +2V เข้าที่อินพุตกลับเฟส?",
+    options: ["+Vs", "0 โวลต์", "-Vs"],
+    explain: "เมื่อไม่มีฟีดแบ็ก เกนวงเปิด (open-loop gain) ที่เป็นอนันต์ของออปแอมป์อุดมคติจะขยายผลต่างอินพุตแม้เพียงเล็กน้อยจนสุดขีด อินพุตกลับเฟส (-) มีแรงดันสูงกว่าอินพุตไม่กลับเฟส (+) ที่ต่อกราวด์ไว้ เอาต์พุตจึงถูกผลักไปทางลบจนอิ่มตัวที่ -Vs ข้อนี้เป็นคำถามเดียวกันกับที่ปรากฏในภาพชุดปรนัยต้นฉบับ พร้อมตัวเลือกสามข้อเดียวกันเป๊ะ"
+  },
+  correctIndex: 2
+},
+{
+  page: 121,
+  en: { q: "Which statement about a raster board is true?",
+    options: [
+      "It has copper coating around each hole.",
+      "It has copper stripes.",
+      "It has no copper coating."
+    ],
+    explain: "The book is explicit: raster boards \"consist of hard paper without copper coating\" — just a perforated board where components are wired point-to-point with leads or wire on the back. Copper around each hole describes a Tag Raster Board, and copper stripes describe a Veroboard — both real, but different, board types, mirroring exactly how this question is phrased on the original MCQ sheet."
+  },
+  th: { q: "ข้อความใดเกี่ยวกับบอร์ดราสเตอร์ (raster board) ถูกต้อง?",
+    options: [
+      "มีการเคลือบทองแดงรอบแต่ละรู",
+      "มีแถบทองแดง",
+      "ไม่มีการเคลือบทองแดง"
+    ],
+    explain: "หนังสือระบุชัดเจนว่าบอร์ดราสเตอร์ \"ทำจากกระดาษแข็งโดยไม่มีการเคลือบทองแดง\" เป็นเพียงบอร์ดเจาะรูที่ต่อวงจรแบบจุดต่อจุดด้วยขาอุปกรณ์หรือสายไฟด้านหลัง ทองแดงรอบรูเป็นของ Tag Raster Board ส่วนแถบทองแดงเป็นของ Veroboard ทั้งสองเป็นบอร์ดจริงแต่คนละชนิด ตรงกับรูปแบบคำถามข้อนี้ในภาพชุดปรนัยต้นฉบับเป๊ะ"
+  },
+  correctIndex: 2
+},
+{
+  page: 122,
+  en: { q: "What is the thickness of the copper coating of a tag raster board?",
+    options: ["15 μm", "35 μm", "70 μm"],
+    explain: "The book states it directly: the copper coating on a tag raster board is 35 μm thick. 15 μm and 70 μm are plausible-sounding neighboring values with no basis in the text — a typical distractor pattern for a single-fact numeric question."
+  },
+  th: { q: "ความหนาของการเคลือบทองแดงของบอร์ด tag raster เท่าใด?",
+    options: ["15 μm", "35 μm", "70 μm"],
+    explain: "หนังสือระบุไว้ตรงๆ ว่าการเคลือบทองแดงของ tag raster board หนา 35 μm ค่า 15 μm และ 70 μm เป็นตัวเลขใกล้เคียงที่ฟังดูเป็นไปได้แต่ไม่มีที่มาในเนื้อหา ซึ่งเป็นรูปแบบตัวลวงทั่วไปของโจทย์ข้อเท็จจริงเชิงตัวเลขแบบนี้"
+  },
+  correctIndex: 1
+},
+{
+  page: "136–137",
+  en: { q: "What is the difference between an open-loop and a closed-loop control system?",
+    options: [
+      "Open-loop has feedback; closed-loop does not.",
+      "Open-loop has no feedback; closed-loop uses feedback to correct the output.",
+      "Both use feedback, but a closed-loop system uses more of it."
+    ],
+    explain: "The book states open-loop systems \"suffer from the major disadvantage that... factors do not remain constant\" since there's no way to check the output against demand, while a closed-loop system compares actual output to the desired result and corrects any error — exactly why it's also called a servo system. Option 1 simply reverses the definitions, and option 3 misdescribes open-loop as having some feedback, which it doesn't."
+  },
+  th: { q: "ความแตกต่างระหว่างระบบควบคุมแบบวงเปิด (open-loop) และวงปิด (closed-loop) คืออะไร?",
+    options: [
+      "วงเปิดมีฟีดแบ็ก ส่วนวงปิดไม่มี",
+      "วงเปิดไม่มีฟีดแบ็ก ส่วนวงปิดใช้ฟีดแบ็กแก้ไขเอาต์พุต",
+      "ทั้งสองใช้ฟีดแบ็ก แต่วงปิดใช้มากกว่า"
+    ],
+    explain: "หนังสือระบุว่าระบบวงเปิด \"มีข้อเสียหลักคือปัจจัยต่างๆ ไม่คงที่\" เพราะไม่มีทางตรวจสอบเอาต์พุตเทียบกับค่าที่ต้องการ ส่วนระบบวงปิดจะเปรียบเทียบเอาต์พุตจริงกับผลลัพธ์ที่ต้องการแล้วแก้ไขความผิดพลาด นี่คือเหตุผลที่เรียกว่าระบบเซอร์โวด้วย ตัวเลือกที่ 1 สลับคำนิยามกันเฉยๆ ส่วนตัวเลือกที่ 3 บอกว่าวงเปิดมีฟีดแบ็กบ้าง ซึ่งไม่จริง"
+  },
+  correctIndex: 1
+},
+{
+  page: "155–156",
+  en: { q: "Which description of a torque transmitter synchro is correct?",
+    options: [
+      "It compares two electrical signals and produces a null/error output.",
+      "It converts a rotor's mechanical angle into an electrical signal sent to a receiver.",
+      "It receives an electrical signal and converts it into a mechanical shaft position."
+    ],
+    explain: "The book explains the torque transmitter's rotor is excited by AC and, by transformer action, induces voltages into the three stator windings (S1, S2, S3) whose relative magnitude corresponds to the rotor's angle — turning a mechanical angle into an electrical signal. Option 1 actually describes a control transformer's job (error/null detection), and option 3 describes a torque receiver's job (the reverse conversion) — both real synchro devices, just not this one."
+  },
+  th: { q: "คำอธิบายใดเกี่ยวกับทอร์กทรานสมิตเตอร์ซินโคร (torque transmitter synchro) ถูกต้อง?",
+    options: [
+      "เปรียบเทียบสัญญาณไฟฟ้าสองสัญญาณแล้วให้เอาต์พุตเป็นค่า null/error",
+      "แปลงมุมทางกลของโรเตอร์เป็นสัญญาณไฟฟ้าส่งไปยังตัวรับ",
+      "รับสัญญาณไฟฟ้าแล้วแปลงเป็นตำแหน่งเพลาทางกล"
+    ],
+    explain: "หนังสืออธิบายว่าโรเตอร์ของทอร์กทรานสมิตเตอร์ถูกกระตุ้นด้วยไฟ AC และอาศัยหลักการทรานส์ฟอร์เมอร์เหนี่ยวนำแรงดันเข้าไปในขดลวดสเตเตอร์สามชุด (S1, S2, S3) ซึ่งขนาดสัมพัทธ์สอดคล้องกับมุมของโรเตอร์ — คือการแปลงมุมทางกลเป็นสัญญาณไฟฟ้า ตัวเลือกที่ 1 จริงๆ แล้วเป็นหน้าที่ของ control transformer (ตรวจจับ error/null) ส่วนตัวเลือกที่ 3 เป็นหน้าที่ของ torque receiver (แปลงกลับด้าน) ทั้งคู่เป็นอุปกรณ์ซินโครจริง แค่คนละตัวกับที่ถาม"
+  },
+  correctIndex: 1
+},
+{
+  page: 166,
+  en: { q: "What is the code of a control transformer?",
+    options: ["TX", "C", "CT"],
+    explain: "The book's standard synchro code table lists it directly: CT — Control Transformer. These exact three options (TX / C / CT) are reused from the original highlighted MCQ sheet's own version of this identical question — TX is a Torque Transmitter, and a bare \"C\" is only the class letter for the whole Control family, not a complete synchro code."
+  },
+  th: { q: "รหัสของคอนโทรลทรานส์ฟอร์เมอร์ (control transformer) คืออะไร?",
+    options: ["TX", "C", "CT"],
+    explain: "ตารางรหัสซินโครมาตรฐานในหนังสือระบุไว้ตรงตัวว่า CT — Control Transformer ตัวเลือกทั้งสาม (TX / C / CT) นี้นำมาจากภาพชุดปรนัยต้นฉบับที่ไฮไลท์คำตอบไว้จริงสำหรับคำถามข้อเดียวกันนี้เป๊ะ — TX คือ Torque Transmitter ส่วน \"C\" เดี่ยวๆ เป็นเพียงตัวอักษรกลุ่ม Control เท่านั้น ไม่ใช่รหัสซินโครที่สมบูรณ์"
+  },
+  correctIndex: 2
+}
+];
+
+/* ---------- State ---------- */
+let lang = 'en';
+let order = [];       // shuffled question indices into BANK
+let optOrder = [];    // per question: shuffled option index arrays
+let current = 0;
+let score = 0;
+let answered = [];    // {chosenLocalIdx, correctLocalIdx, questionRefIdx}
+let locked = false;
+
+function shuffleArr(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('langEn').classList.toggle('active', l === 'en');
+  document.getElementById('langTh').classList.toggle('active', l === 'th');
+  render();
+}
+
+function initQuiz(shuffle) {
+  order = shuffle ? shuffleArr(BANK.map((_, i) => i)) : BANK.map((_, i) => i);
+  optOrder = order.map(qi => shuffle ? shuffleArr(BANK[qi].en.options.map((_, i) => i)) : BANK[qi].en.options.map((_, i) => i));
+  current = 0;
+  score = 0;
+  answered = [];
+  locked = false;
+  document.getElementById('results').classList.remove('show');
+  render();
+}
+
+function render() {
+  const qIndex = order[current];
+  const q = BANK[qIndex];
+  const opts = optOrder[current];
+  document.getElementById('progressLabel').textContent = `Q ${current + 1} / ${BANK.length}`;
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  document.getElementById('meterFill').style.width = `${(current / BANK.length) * 100}%`;
+
+  const qd = q[lang];
+  const qEn = q.en;
+
+  let html = `<div class="card">
+    <p class="qnum">QUESTION ${current + 1} · p.${q.page}</p>
+    <p class="qtext">${lang === 'en' ? qd.q : qEn.q}${lang === 'th' ? `<span class="th">${qd.q}</span>` : ''}</p>
+    <div class="options" id="optionsWrap">`;
+
+  opts.forEach((origIdx, i) => {
+    const letter = String.fromCharCode(97 + i);
+    const textEn = qEn.options[origIdx];
+    const textTh = q.th.options[origIdx];
+    const diagramHtml = q.diagrams
+      ? `<span class="diagram">${transistorSVG(q.diagrams[origIdx].top, q.diagrams[origIdx].mid, q.diagrams[origIdx].bot)}</span>`
+      : '';
+    html += `<button class="opt${q.diagrams ? ' has-diagram' : ''}" data-orig="${origIdx}" onclick="selectOption(${origIdx})">
+      <span class="k">${letter})</span>
+      <span class="body">${diagramHtml}${textEn}${lang === 'th' ? `<span class="th">${textTh}</span>` : ''}</span>
+    </button>`;
+  });
+
+  html += `</div>
+    <div class="feedback" id="feedback">
+      <span class="lbl" id="fbLabel"></span>
+      <span id="fbTextEn"></span>
+      <div class="exp-th" id="fbTextTh" style="display:none;"></div>
+      <div class="cite" id="fbCite"></div>
+    </div>
+    <div class="nav-row">
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">${current === BANK.length - 1 ? (lang==='th'?'ดูผลลัพธ์ →':'See Results →') : (lang==='th'?'ข้อถัดไป →':'Next →')}</button>
+    </div>
+  </div>`;
+
+  document.getElementById('quizArea').innerHTML = html;
+  locked = false;
+}
+
+function selectOption(origIdx) {
+  if (locked) return;
+  locked = true;
+  const qIndex = order[current];
+  const q = BANK[qIndex];
+  const correct = origIdx === q.correctIndex;
+  if (correct) score++;
+  answered.push({ questionRefIdx: qIndex, chosenOrig: origIdx, correctOrig: q.correctIndex, wasCorrect: correct });
+
+  const buttons = document.querySelectorAll('#optionsWrap .opt');
+  buttons.forEach(btn => {
+    const bo = parseInt(btn.getAttribute('data-orig'), 10);
+    btn.disabled = true;
+    if (bo === q.correctIndex) btn.classList.add('correct');
+    else if (bo === origIdx) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show', correct ? 'ok' : 'bad');
+  document.getElementById('fbLabel').textContent = correct
+    ? (lang === 'th' ? 'ถูกต้อง' : 'CORRECT')
+    : (lang === 'th' ? 'ไม่ถูกต้อง' : 'INCORRECT');
+  document.getElementById('fbTextEn').textContent = q.en.explain;
+  const fbTh = document.getElementById('fbTextTh');
+  fbTh.textContent = q.th.explain;
+  fbTh.style.display = 'block';
+  document.getElementById('fbCite').textContent = `Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}`;
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion() {
+  if (current < BANK.length - 1) {
+    current++;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('meterFill').style.width = '100%';
+  document.getElementById('quizArea').innerHTML = '';
+  const pct = Math.round((score / BANK.length) * 100);
+  const pass = pct >= 75;
+  document.getElementById('results').classList.add('show');
+  document.getElementById('resultTag').textContent = lang === 'th' ? 'ผลการทดสอบ' : 'RESULT';
+  const sb = document.getElementById('scoreBig');
+  sb.textContent = `${score} / ${BANK.length}`;
+  sb.className = 'score-big ' + (pass ? 'pass' : 'fail');
+  document.getElementById('scorePct').textContent = `${pct}%`;
+  const badge = document.getElementById('passBadge');
+  badge.textContent = pass ? (lang === 'th' ? 'ผ่าน' : 'PASS') : (lang === 'th' ? 'ไม่ผ่าน' : 'FAIL');
+  badge.className = 'badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('thresholdNote').textContent = lang === 'th' ? 'เกณฑ์ผ่าน: 75%' : 'Pass threshold: 75%';
+  document.getElementById('reviewTitle').textContent = lang === 'th' ? '— รายการเฉลยทั้งหมด —' : '— FULL ANSWER REVIEW —';
+
+  let html = '';
+  answered.forEach((a, i) => {
+    const q = BANK[a.questionRefIdx];
+    const qd = q[lang];
+    const qEn = q.en;
+    const chosenText = lang === 'th' ? q.th.options[a.chosenOrig] : q.en.options[a.chosenOrig];
+    const correctText = lang === 'th' ? q.th.options[a.correctOrig] : q.en.options[a.correctOrig];
+    html += `<div class="review-item">
+      <p class="rq"><span class="rmark ${a.wasCorrect ? 'correct-mark' : 'wrong-mark'}">${a.wasCorrect ? '✓' : '✗'}</span>${i + 1}. ${lang==='en'?qEn.q:qd.q}</p>
+      <p class="ra">${lang==='th'?'คำตอบของคุณ':'Your answer'}: <b>${chosenText}</b></p>
+      ${a.wasCorrect ? '' : `<p class="ra">${lang==='th'?'คำตอบที่ถูกต้อง':'Correct answer'}: <b>${correctText}</b></p>`}
+      <p class="rexp">${lang==='en'?q.en.explain:q.th.explain}</p>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}</div>
+    </div>`;
+  });
+  document.getElementById('reviewList').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartQuiz(shuffle) {
+  initQuiz(shuffle);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* init */
+initQuiz(true);
+</script>
+</body>
+</html>

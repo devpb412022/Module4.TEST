@@ -64,6 +64,11 @@
     transition: border-color .15s ease, transform .1s ease;
   }
   .card:hover { border-color: var(--amber-dim); transform: translateY(-1px); }
+  .card.primary { border: 1.5px solid var(--amber); background: linear-gradient(180deg, var(--panel), var(--panel-2)); }
+  .card.primary:hover { border-color: var(--amber); }
+  .card .count.primary-badge { color: var(--bg); background: var(--amber); border-color: var(--amber); font-weight: 600; }
+  .note-line { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin: 2px 4px 12px; line-height: 1.6; }
+  .note-line .th { display: block; font-family: 'Sarabun', sans-serif; margin-top: 2px; }
   .card .emoji { font-size: 26px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
   .card .body { flex: 1; min-width: 0; }
   .card .top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
@@ -99,39 +104,41 @@
     </h1>
   </div>
 
-  <p class="sect-title">— PRACTICE SETS · ชุดฝึกทำข้อสอบ —</p>
+  <p class="sect-title">— ⭐ PRIMARY · REAL CONTENT, REAL FORMAT · เน้นชุดนี้ —</p>
 
-  <a class="card-link" href="mcq-mock-test.html" target="_blank" rel="noopener">
-    <div class="card">
+  <a class="card-link" href="oral-as-mcq.html" target="_blank" rel="noopener">
+    <div class="card primary">
       <span class="emoji">🎯</span>
       <div class="body">
-        <div class="top-row"><h2>MCQ Mock Test</h2><span class="count">20 Q</span></div>
-        <p>Multiple-choice, 3 options each, from the first photographed question sheet. Fisher–Yates shuffle on every retake, 75% pass line. Covers semiconductors, diodes, transistors, op-amps, PCB/raster/Vero boards, and synchros.</p>
-        <p class="th">ปรนัย 3 ตัวเลือก จากภาพชุดแรก สลับข้อและตัวเลือกทุกครั้ง เกณฑ์ผ่าน 75% ครอบคลุมสารกึ่งตัวนำ ไดโอด ทรานซิสเตอร์ ออปแอมป์ แผ่นวงจร และซินโคร</p>
+        <div class="top-row"><h2>Oral Set as MCQ (EASA-style)</h2><span class="count primary-badge">MAIN · 20 Q</span></div>
+        <p>The actual exam: the real Oral/Recall question content, in the real exam format (multiple choice). Distractors built following EASA's own GM Question Bank methodology; the 5 questions that overlap with the highlighted MCQ sheet reuse that sheet's real options instead of invented ones. Study this one.</p>
+        <p class="th">คือข้อสอบจริง — เนื้อหาคำถามจากชุดปากเปล่าตัวจริง แต่อยู่ในรูปแบบข้อสอบจริง (ปรนัย) ตัวลวงสร้างตามแนวทางของ EASA เอง (GM Question Bank) ข้อที่ซ้ำกับชุดปรนัยที่ไฮไลท์คำตอบไว้ใช้ตัวเลือกจริงจากชุดนั้น ให้เน้นอ่านชุดนี้เป็นหลัก</p>
         <span class="go">Open →</span>
       </div>
     </div>
   </a>
+
+  <p class="sect-title">— REFERENCE · ไว้อ้างอิง —</p>
 
   <a class="card-link" href="oral-review.html" target="_blank" rel="noopener">
     <div class="card">
       <span class="emoji">🎙️</span>
       <div class="body">
         <div class="top-row"><h2>Oral / Recall Review</h2><span class="count">20 Q</span></div>
-        <p>Open-ended verbal-exam style questions from the second photographed sheet. Reveal-answer + self-mark flashcard flow, plus one diagram-choice question (transistor lead labeling). Now includes cross-check notes on 4 items — see below.</p>
-        <p class="th">คำถามปากเปล่าจากภาพชุดที่สอง แบบเฉลย+ประเมินตัวเอง มีข้อเลือกภาพ 1 ข้อ (ติดฉลากขาทรานซิสเตอร์) ตอนนี้มีหมายเหตุเทียบเฉลยแทรกไว้ใน 4 ข้อแล้ว (ดูด้านล่าง)</p>
+        <p>The same real question content as above, but in open-ended form (no options) with a reveal-answer + self-mark flashcard flow — useful for making sure you actually understand the answer, not just recognise it among 3 choices.</p>
+        <p class="th">เนื้อหาคำถามจริงชุดเดียวกับด้านบน แต่เป็นแบบปากเปล่า (ไม่มีตัวเลือก) แบบเฉลย+ประเมินตัวเอง มีประโยชน์ตอนอยากเช็คว่าเข้าใจคำตอบจริงๆ ไม่ใช่แค่จำได้จากตัวเลือก</p>
         <span class="go">Open →</span>
       </div>
     </div>
   </a>
 
-  <a class="card-link" href="combined-40.html" target="_blank" rel="noopener">
+  <a class="card-link" href="mcq-highlighted.html" target="_blank" rel="noopener">
     <div class="card">
-      <span class="emoji">🗂️</span>
+      <span class="emoji">🎯</span>
       <div class="body">
-        <div class="top-row"><h2>Combined Set</h2><span class="count">40 Q</span></div>
-        <p>Both sets above merged into one file, in their original form — the 5 overlapping questions are kept, not deduplicated. Mixes MCQ, diagram-choice, and oral-recall question types in one shuffled run.</p>
-        <p class="th">รวมสองชุดข้างต้นเป็นไฟล์เดียว โดยไม่ตัดข้อที่ซ้ำกัน 5 ข้อออก มีทั้งปรนัย เลือกภาพ และปากเปล่าปนกันในชุดเดียว</p>
+        <div class="top-row"><h2>MCQ Set (Highlighted Answers)</h2><span class="count">20 Q</span></div>
+        <p>A separate real question set (different questions, own highlighted answers) covering the same textbook chapters — extra coverage, not part of the confirmed real exam content above.</p>
+        <p class="th">ชุดข้อสอบจริงแยกอีกชุดหนึ่ง (คนละคำถาม มีคำตอบไฮไลท์ในตัวเอง) ครอบคลุมเนื้อหาบทเดียวกัน ไว้ฝึกเพิ่มเติม ไม่ใช่ส่วนหนึ่งของเนื้อหาข้อสอบจริงชุดหลักด้านบน</p>
         <span class="go">Open →</span>
       </div>
     </div>
