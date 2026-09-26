@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 — Short-Answer Review (Full Page)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090b; --panel: #0e1316; --panel-2: #121820; --line: #223038;
+    --amber: #ffb020; --amber-dim: #8a5f18; --cyan: #35e6e0; --cyan-dim: #1a6e6b;
+    --red: #ff4d4d; --text: #d9e4e6; --text-dim: #7d9296;
+    --font-head: 'Chakra Petch', 'Sarabun', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Sarabun', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+      --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+    --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--font-body);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px; background-attachment: fixed; background-position: center;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(53,230,224,0.05), transparent 60%);
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 18px 16px 48px; }
+
+  .hud {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px;
+  }
+  .hud-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--cyan); margin: 0 0 4px; }
+  .hud-title { font-family: var(--font-head); font-weight: 600; font-size: 21px; line-height: 1.3; margin: 0; color: var(--text); }
+  .hud-title .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 14.5px; font-weight: 400; color: var(--text-dim); margin-top: 4px; }
+  .hud-count { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 10px; }
+
+  .item {
+    border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius);
+    padding: 16px 18px; margin-bottom: 12px;
+  }
+  .qn { font-family: var(--font-mono); font-size: 11px; color: var(--amber); letter-spacing: 0.06em; margin: 0 0 6px; }
+  .qtext { font-family: var(--font-head); font-size: 16.5px; font-weight: 500; line-height: 1.4; margin: 0; }
+  .qtext .th { display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; font-size: 14px; color: var(--text-dim); margin-top: 5px; }
+
+  .ans-block { margin-top: 12px; }
+  .ans-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--cyan); }
+  .ans-main { font-family: var(--font-head); font-size: 15px; font-weight: 500; margin: 4px 0 0; line-height: 1.4; }
+  .ans-main .th { display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; font-size: 13.5px; color: var(--text-dim); margin-top: 3px; }
+
+  .exp-block {
+    margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); background: var(--panel-2);
+    border-radius: var(--radius); font-size: 13px; line-height: 1.55; color: var(--text-dim);
+  }
+  .exp-block .th { display: block; font-family: 'Sarabun', sans-serif; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .cite {
+    display: inline-block; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; color: var(--amber);
+    border: 1px solid var(--amber-dim); border-radius: var(--radius); padding: 2px 7px;
+  }
+
+  .diag-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .diag-item { border: 1px solid var(--line); background: var(--panel-2); border-radius: var(--radius); padding: 6px 4px 8px; text-align: center; }
+  .diag-item.diag-correct { border-color: var(--cyan); background: rgba(53,230,224,0.08); }
+  .diag-item svg { width: 100%; height: auto; }
+  .diag-lab { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); display: block; margin-top: 2px; }
+  .diag-item.diag-correct .diag-lab { color: var(--cyan); }
+
+  .trick-block {
+    margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--amber-dim); border-radius: var(--radius);
+    background: rgba(255,176,32,0.05);
+  }
+  .trick-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--amber); display: block; margin-bottom: 4px; }
+  .trick-en { margin: 0; font-size: 13px; line-height: 1.5; color: var(--text); }
+  .trick-th { margin: 5px 0 0; padding-top: 5px; border-top: 1px dashed var(--amber-dim); font-family: 'Sarabun', sans-serif; font-size: 12.5px; line-height: 1.6; color: var(--text-dim); }
+
+  footer { margin-top: 24px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.04em; }
+
+  @media (max-width: 420px) {
+    .hud-title { font-size: 18px; }
+    .qtext { font-size: 15.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud">
+    <p class="hud-tag">PART66 · CAT-B1 · MODULE 4 — REAL EXAM SET</p>
+    <h1 class="hud-title">Electronic Fundamentals — Short-Answer Review
+      <span class="th">ทบทวนคำถามปากเปล่า โมดูล 4 — พื้นฐานอิเล็กทรอนิกส์ (แบบอ่านยาว)</span>
+    </h1>
+    <p class="hud-count">All 20 questions, answers, explanations, and a memory trick for each — scroll to read, nothing to click · ครบ 20 ข้อในหน้าเดียว พร้อมเคล็ดลับการจำทุกข้อ เลื่อนอ่านได้เลย ไม่ต้องกด</p>
+  </div>
+
+<div class="item">
+      <p class="qn">Q1 · p.20</p>
+      <p class="qtext">What is the voltage drop across a germanium diode?<span class="th">แรงดันตกคร่อม (voltage drop) ของไดโอดเจอร์เมเนียมเท่าใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">0.3 V<span class="th">0.3 โวลต์</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual states the forward switch-on voltage directly: Germanium = 0.3V (Silicon = 0.7V, for comparison).</span>
+        <span class="th">หนังสือระบุแรงดันเปิดนำกระแสไว้ชัดเจน: เจอร์เมเนียม = 0.3V (เทียบกับซิลิคอน = 0.7V)</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.20</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">G before S, 0.3 before 0.7 — alphabetical order matches numeric order (Germanium/0.3V, Silicon/0.7V).</p>
+        <p class="trick-th">G มาก่อน S ตามตัวอักษร เหมือน 0.3 มาก่อน 0.7 ตามตัวเลข (เจอร์เมเนียม/0.3V, ซิลิคอน/0.7V)</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q2 · p.28</p>
+      <p class="qtext">In which direction or directions should a diode be tested for proper functionality?<span class="th">ควรทดสอบไดโอดในทิศทางใดหรือหลายทิศทางเพื่อตรวจสอบว่าทำงานปกติ?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Both directions — forward bias AND reverse bias.<span class="th">ทั้งสองทิศทาง — ทั้ง forward bias และ reverse bias</span></p>
+      </div>
+      <div class="exp-block">
+        <span>A functional diode shows very low resistance in forward bias (roughly 0.6–0.9V drop on a DMM diode-test range) and very high resistance — near open circuit — in reverse bias. Testing only one direction can't distinguish a good diode from one that's shorted or open, so both readings are needed.</span>
+        <span class="th">ไดโอดที่ทำงานปกติจะมีความต้านทานต่ำมากเมื่อ forward bias (แรงดันตกคร่อมประมาณ 0.6–0.9V บนโหมดทดสอบไดโอดของ DMM) และมีความต้านทานสูงมาก (เกือบเป็นวงจรเปิด) เมื่อ reverse bias การทดสอบเพียงทิศทางเดียวไม่สามารถแยกแยะไดโอดที่ดีออกจากไดโอดที่ช็อตหรือขาดได้ จึงต้องอ่านค่าทั้งสองทิศทาง</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.28</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">A diode is a one-way street — you can only prove that by trying both directions.</p>
+        <p class="trick-th">ไดโอดเป็นถนนทางเดียว จะพิสูจน์ได้ก็ต้องลองทั้งสองทิศทางเท่านั้น</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q3 · p.15</p>
+      <p class="qtext">To create a silicon p-type conductor, which material is used for doping the silicon?<span class="th">การสร้างสารกึ่งตัวนำซิลิคอนชนิด P (p-type) ใช้วัสดุใดในการโดป (dope) ซิลิคอน?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">A Group 3 element — Boron (Indium and Aluminum also work).<span class="th">ธาตุในกลุ่ม 3 — โบรอน (Boron) (อินเดียมและอะลูมิเนียมก็ใช้ได้เช่นกัน)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual lists "Indium, Aluminum and Boron" as Group 3 materials used for P-type doping — Boron is the one most commonly cited. Group 3 elements have only 3 valence electrons, so bonding into the silicon lattice leaves an extra hole (an "acceptor"), which is what makes the material P-type.</span>
+        <span class="th">หนังสือระบุว่า "อินเดียม อะลูมิเนียม และโบรอน" เป็นธาตุกลุ่ม 3 ที่ใช้โดปชนิด P โดยโบรอนเป็นตัวที่ถูกอ้างถึงบ่อยที่สุด ธาตุกลุ่ม 3 มีอิเล็กตรอนวงนอกเพียง 3 ตัว เมื่อสร้างพันธะในโครงผลึกซิลิคอนจึงเหลือโฮลส่วนเกิน (เรียกว่า "acceptor") ซึ่งทำให้วัสดุกลายเป็นชนิด P</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.15</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Boron Borrows an electron short, leaving a hole — hence P-type. (Same 3 elements as the N-type question, just Boron is the one that's correct here.)</p>
+        <p class="trick-th">โบรอนขาดอิเล็กตรอนไป 1 ตัว จึงเหลือโฮล กลายเป็นชนิด P (ใช้ธาตุ 3 ตัวเดียวกับข้อ n-type แค่สลับว่าโบรอนคือตัวที่ถูก)</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q4 · p.28</p>
+      <p class="qtext">What does the display on a digital multimeter show when testing a silicon rectifier diode in the reverse direction?<span class="th">หน้าจอมัลติมิเตอร์ดิจิทัล (DMM) แสดงผลอย่างไรเมื่อทดสอบไดโอดเรียงกระแสซิลิคอนในทิศทาง reverse?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">A high reading close to the DMM's diode-test supply limit (e.g. ~2.5V), or 'OL' (overload / open-circuit).<span class="th">ค่าที่อ่านได้จะสูงใกล้เคียงแรงดันทดสอบสูงสุดของ DMM (เช่น ~2.5V) หรือขึ้น 'OL' (overload / วงจรเปิด)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual gives this exact example: testing a good diode in reverse bias, the DMM may read around 2.5V (the illustrative value used in the book) or display 'OL' — both indicate a very high resistance path, since only a negligible reverse leakage current is flowing. A commonly circulated separate answer key for this question lists 'OL' only — that's incomplete, since the book confirms both readings are normal.</span>
+        <span class="th">หนังสือยกตัวอย่างไว้ตรงนี้เลย: เมื่อทดสอบไดโอดที่ดีในทิศทาง reverse bias มิเตอร์อาจอ่านได้ประมาณ 2.5V (ค่าตัวอย่างที่ใช้ในหนังสือ) หรือขึ้น 'OL' ทั้งสองแบบบ่งบอกถึงเส้นทางความต้านทานที่สูงมาก เนื่องจากมีเพียงกระแสรั่วไหลเพียงเล็กน้อยเท่านั้นที่ไหลผ่าน เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบเพียง 'OL' อย่างเดียว ซึ่งไม่ครบ เพราะหนังสือยืนยันว่าทั้งสองแบบถือว่าปกติ</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.28</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Reverse bias = Roadblock — the meter reads Overload (OL).</p>
+        <p class="trick-th">Reverse bias คือ "ทางตัน" มิเตอร์เลยขึ้น Overload (OL)</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q5 · p.20–21</p>
+      <p class="qtext">What is the voltage drop at a series connection of 4 germanium diodes?<span class="th">แรงดันตกคร่อมของไดโอดเจอร์เมเนียม 4 ตัวต่ออนุกรมกันเท่าใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">1.2 V (4 × 0.3V).<span class="th">1.2 โวลต์ (4 × 0.3V)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>Diodes in series each carry the same current, and the total forward drop is the sum of each diode's own drop. With germanium's 0.3V forward voltage, four in series drop 4 × 0.3V = 1.2V, leaving the rest of the supply across the load (Kirchhoff's voltage law).</span>
+        <span class="th">ไดโอดที่ต่ออนุกรมกันจะมีกระแสไหลผ่านเท่ากันทุกตัว และแรงดันตกคร่อมรวมคือผลรวมของแรงดันตกคร่อมของแต่ละตัว เมื่อแรงดัน forward ของเจอร์เมเนียมคือ 0.3V ไดโอด 4 ตัวต่ออนุกรมจะตกคร่อมรวม 4 × 0.3V = 1.2V ส่วนที่เหลือของแรงดันไฟเลี้ยงจะตกคร่อมที่โหลด (ตามกฎแรงดันของ Kirchhoff)</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.20–21</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">0.3 × 4 = 1.2 — just like 3×4=12, add the decimal point back.</p>
+        <p class="trick-th">0.3 × 4 = 1.2 — เหมือนคูณ 3×4=12 แล้วเติมจุดทศนิยมกลับไป</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q6 · p.20</p>
+      <p class="qtext">Which statement is correct when a P-N junction is biased in reverse?<span class="th">ข้อความใดถูกต้องเมื่อรอยต่อ P-N (P-N junction) ถูกไบแอสในทิศทาง reverse?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">The depletion region widens, and only a negligible leakage current (from minority carriers) flows.<span class="th">บริเวณ depletion region ขยายกว้างขึ้น และมีเพียงกระแสรั่วไหลจากพาหะส่วนน้อยเท่านั้นที่ไหลผ่าน (น้อยมาก)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual states it directly: "During reverse bias operation, the electrons and holes move away from the junction as the depletion region increases. A negligible current is permitted to flow due to leakage from minority carriers (usually no more than 100μA)."</span>
+        <span class="th">หนังสือระบุไว้ตรง ๆ ว่า "เมื่อทำงานในโหมด reverse bias อิเล็กตรอนและโฮลจะเคลื่อนที่ออกห่างจากรอยต่อ ทำให้ depletion region ขยายกว้างขึ้น มีกระแสไหลได้เพียงเล็กน้อยมาก (โดยทั่วไปไม่เกิน 100μA) จากการรั่วไหลของพาหะส่วนน้อย (minority carriers)"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.20</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Reverse = Retreat — carriers retreat from the junction, so the empty (depletion) zone grows.</p>
+        <p class="trick-th">Reverse คือ "ถอย" — พาหะถอยห่างจากรอยต่อ พื้นที่ว่าง (depletion) เลยกว้างขึ้น</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q7 · p.49</p>
+      <p class="qtext">What is the voltage drop at a series connection of 3 silicon diodes?<span class="th">แรงดันตกคร่อมของไดโอดซิลิคอน 3 ตัวต่ออนุกรมกันเท่าใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">2.1 V (3 × 0.7V).<span class="th">2.1 โวลต์ (3 × 0.7V)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>This is a worked example straight from the manual: "The voltage drop across a single diode is 0.7V. The voltage drop across all 3 diodes is 2.1V (0.7V×3)."</span>
+        <span class="th">นี่คือตัวอย่างการคำนวณจากหนังสือโดยตรง: "แรงดันตกคร่อมของไดโอดตัวเดียวคือ 0.7V แรงดันตกคร่อมของไดโอดทั้ง 3 ตัวคือ 2.1V (0.7V×3)"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.49</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">0.7 × 3 = 2.1 — think "7×3=21", add the decimal point back.</p>
+        <p class="trick-th">0.7 × 3 = 2.1 — คิดแบบ 7×3=21 แล้วเติมจุดทศนิยมกลับไป</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q8 · p.46</p>
+      <p class="qtext">What are the three leads of a TRIAC called?<span class="th">ขาทั้งสามของ TRIAC เรียกว่าอะไร?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">A1, A2 and G (Anode 1, Anode 2, and Gate).<span class="th">A1, A2 และ G (Anode 1, Anode 2 และ Gate)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual's own Triac circuit symbol (Figure 42) labels the three leads exactly this way: A1 at the top, A2 at the bottom, and G (Gate) coming off the side — the two Anode leads carry the bi-directional load current, while the Gate triggers conduction. A commonly circulated separate answer key for this question uses "MT1, MT2" instead — that's standard terminology elsewhere, but not what this book's own figure labels.</span>
+        <span class="th">สัญลักษณ์วงจร Triac ในหนังสือ (Figure 42) ระบุขาทั้งสามไว้ตรงนี้เลย: A1 อยู่ด้านบน, A2 อยู่ด้านล่าง และ G (Gate) ยื่นออกด้านข้าง ขา Anode ทั้งสองนำกระแสโหลดแบบสองทิศทาง ส่วนขา Gate ใช้กระตุ้นให้เริ่มนำกระแส เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปใช้คำว่า "MT1, MT2" แทน ซึ่งเป็นศัพท์มาตรฐานในตำราเล่มอื่น แต่ไม่ตรงกับที่หนังสือเล่มนี้ระบุไว้เอง</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.46</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">TRIAC works TWO ways — TWO Anodes (A1, A2) plus a Gate.</p>
+        <p class="trick-th">TRIAC นำกระแสได้สองทาง จึงมีสอง Anode (A1, A2) บวก Gate</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q9 · p.76</p>
+      <p class="qtext">What else is a bipolar transistor called?<span class="th">ทรานซิสเตอร์ชนิดไบโพลาร์ (bipolar transistor) มีชื่อเรียกอื่นว่าอะไร?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">BJT — Bipolar Junction Transistor.<span class="th">BJT — Bipolar Junction Transistor</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual uses this abbreviation directly when introducing coupled amplifiers: "The Common-Emitter (CE) configuration is a Bi-polar junction transistor (BJT) arrangement..."</span>
+        <span class="th">หนังสือใช้คำย่อนี้โดยตรงตอนแนะนำวงจรขยายแบบต่อพ่วง: "วงจร Common-Emitter (CE) คือการจัดวงจรแบบ Bi-polar junction transistor (BJT)..."</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.76</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">BI-polar = BJT — "BI" means two, matching its two junctions (base-emitter, base-collector).</p>
+        <p class="trick-th">BI-polar = BJT — "BI" แปลว่าสอง ตรงกับสองรอยต่อของมัน (เบส-อิมิตเตอร์, เบส-คอลเลกเตอร์)</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q10 · p.53</p>
+      <p class="qtext">What is the base-emitter voltage to operate a silicon transistor?<span class="th">แรงดันเบส-อิมิตเตอร์ที่ใช้ในการทำงานของทรานซิสเตอร์ซิลิคอนคือเท่าใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">0.7 V<span class="th">0.7 โวลต์</span></p>
+      </div>
+      <div class="exp-block">
+        <span>Just like a silicon diode's forward barrier, the Base-Emitter junction of a silicon transistor must be forward biased with at least 0.7V before the transistor conducts.</span>
+        <span class="th">เช่นเดียวกับ forward barrier ของไดโอดซิลิคอน รอยต่อเบส-อิมิตเตอร์ของทรานซิสเตอร์ซิลิคอนต้องได้รับ forward bias อย่างน้อย 0.7V ก่อนทรานซิสเตอร์จึงจะนำกระแส</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.53</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">A transistor's B-E junction is just a diode — same silicon rule, same 0.7V.</p>
+        <p class="trick-th">รอยต่อ B-E ของทรานซิสเตอร์ก็คือไดโอดธรรมดา ใช้กฎซิลิคอนเดียวกัน คือ 0.7V</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q11 · p.53</p>
+      <p class="qtext">What are the three leads of a bipolar transistor called?<span class="th">ขาทั้งสามของทรานซิสเตอร์ไบโพลาร์เรียกว่าอะไร?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Base, Emitter and Collector.<span class="th">เบส (Base), อิมิตเตอร์ (Emitter) และคอลเลกเตอร์ (Collector)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual's NPN Transistor Construction figure labels all three: the base (the thin, lightly-doped middle layer), the emitter (which supplies the majority carriers), and the collector (which collects them).</span>
+        <span class="th">แผนภาพโครงสร้างทรานซิสเตอร์ NPN ในหนังสือระบุขาทั้งสามไว้ชัดเจน: เบส (ชั้นกลางที่บางและโดปเบา), อิมิตเตอร์ (ที่ป้อนพาหะส่วนใหญ่) และคอลเลกเตอร์ (ที่รับพาหะเหล่านั้น)</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.53</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">"Big Cats Eat" — B, C, E, in that order.</p>
+        <p class="trick-th">ท่องแบบ "บี-ซี-อี" ตามลำดับ: เบส-คอลเลกเตอร์-อิมิตเตอร์</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q12 · p.53</p>
+      <p class="qtext">In which picture are the leads of the transistor correctly labeled?<span class="th">ภาพใดที่มีการติดฉลากขาทรานซิสเตอร์ถูกต้อง?</span></p>
+      <div class="diag-row"><div class="diag-item diag-correct">
+        <svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--text)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <line x1="45" y1="20" x2="45" y2="90"/>
+      <line x1="15" y1="55" x2="45" y2="55"/>
+      <line x1="45" y1="35" x2="85" y2="15"/>
+      <line x1="85" y1="15" x2="85" y2="3"/>
+      <line x1="45" y1="75" x2="85" y2="95"/>
+      <line x1="85" y1="95" x2="85" y2="107"/>
+      <polygon points="63,63 74,68 68,77" fill="var(--text)" stroke="none"/>
+    </g>
+    <text x="88" y="12" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">C</text>
+    <text x="2" y="50" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">B</text>
+    <text x="88" y="105" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">E</text>
+  </svg>
+        <span class="diag-lab">(A) ✓</span>
+      </div><div class="diag-item">
+        <svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--text)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <line x1="45" y1="20" x2="45" y2="90"/>
+      <line x1="15" y1="55" x2="45" y2="55"/>
+      <line x1="45" y1="35" x2="85" y2="15"/>
+      <line x1="85" y1="15" x2="85" y2="3"/>
+      <line x1="45" y1="75" x2="85" y2="95"/>
+      <line x1="85" y1="95" x2="85" y2="107"/>
+      <polygon points="63,63 74,68 68,77" fill="var(--text)" stroke="none"/>
+    </g>
+    <text x="88" y="12" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">B</text>
+    <text x="2" y="50" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">C</text>
+    <text x="88" y="105" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">E</text>
+  </svg>
+        <span class="diag-lab">(B)</span>
+      </div><div class="diag-item">
+        <svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--text)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <line x1="45" y1="20" x2="45" y2="90"/>
+      <line x1="15" y1="55" x2="45" y2="55"/>
+      <line x1="45" y1="35" x2="85" y2="15"/>
+      <line x1="85" y1="15" x2="85" y2="3"/>
+      <line x1="45" y1="75" x2="85" y2="95"/>
+      <line x1="85" y1="95" x2="85" y2="107"/>
+      <polygon points="63,63 74,68 68,77" fill="var(--text)" stroke="none"/>
+    </g>
+    <text x="88" y="12" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">E</text>
+    <text x="2" y="50" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">B</text>
+    <text x="88" y="105" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">C</text>
+  </svg>
+        <span class="diag-lab">(C)</span>
+      </div></div>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Picture A · ภาพ A</p>
+      </div>
+      <div class="exp-block">
+        <span>The book's own transistor construction diagram (Figure 45) fixes the layout: the horizontal lead into the base bar is always the Base, the top diagonal lead is the Collector, and the bottom diagonal lead (the one with the arrow) is the Emitter. Only Picture A follows that layout — Picture B swaps Base and Collector, and Picture C swaps Collector and Emitter.</span>
+        <span class="th">แผนภาพโครงสร้างทรานซิสเตอร์ในหนังสือ (Figure 45) กำหนดผังไว้ตายตัว: ขาที่ต่อในแนวนอนเข้ากับแท่งเบสคือเบสเสมอ ขาทแยงด้านบนคือคอลเลกเตอร์ และขาทแยงด้านล่าง (ที่มีลูกศร) คืออิมิตเตอร์ มีเพียงภาพ A เท่านั้นที่ตรงตามผังนี้ — ภาพ B สลับเบสกับคอลเลกเตอร์ ส่วนภาพ C สลับคอลเลกเตอร์กับอิมิตเตอร์</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.53</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Collector's on top, Emitter's got the arrow at the bottom — top-to-bottom on the symbol reads C, B, E.</p>
+        <p class="trick-th">คอลเลกเตอร์อยู่บน อิมิตเตอร์มีลูกศรอยู่ล่าง ไล่จากบนลงล่างของสัญลักษณ์จะได้ C-B-E</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q13 · p.93</p>
+      <p class="qtext">What connections does an operational amplifier have?<span class="th">ออปแอมป์ (operational amplifier) มีขาต่อ (connections) อะไรบ้าง?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Two inputs (inverting − and non-inverting +), one output, and two DC supply pins (+V and −V).<span class="th">อินพุตสองขา (กลับเฟส − และไม่กลับเฟส +), เอาต์พุตหนึ่งขา และขาไฟเลี้ยงกระแสตรงสองขา (+V และ −V)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual states: "The standard Op-amp has two input terminals, the inverting input (labelled '-') and the non-inverting input (+). It also has one output terminal," plus "the typical Op-amp requires two DC supply voltages. One is positive, and the other is negative." A commonly circulated separate answer key for this question stops at "two inputs and one output" — missing the two supply pins the book itself adds.</span>
+        <span class="th">หนังสือระบุว่า "ออปแอมป์มาตรฐานมีขาอินพุตสองขา คือขากลับเฟส (มีเครื่องหมาย '-') และขาไม่กลับเฟส (+) และมีขาเอาต์พุตหนึ่งขา" พร้อมทั้งระบุว่า "ออปแอมป์ทั่วไปต้องการแรงดันไฟเลี้ยงกระแสตรงสองค่า ค่าหนึ่งเป็นบวก อีกค่าเป็นลบ" เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบแค่ "อินพุตสองขาและเอาต์พุตหนึ่งขา" เท่านั้น ขาดขาไฟเลี้ยงสองขาที่หนังสือระบุเพิ่มไว้</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.93</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">An op-amp needs "5 fingers" to work: 2 inputs, 1 output, 2 power pins.</p>
+        <p class="trick-th">ออปแอมป์ต้องการ "5 นิ้ว" ถึงจะทำงานได้: อินพุต 2 เอาต์พุต 1 ไฟเลี้ยง 2</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q14 · p.106</p>
+      <p class="qtext">Where is the input signal applied at an inverting op amplifier?<span class="th">สัญญาณอินพุตของออปแอมป์แบบกลับเฟส (inverting op amplifier) ถูกป้อนเข้าที่ใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Through a series input resistor into the inverting (−) input; the non-inverting (+) input is grounded.<span class="th">ผ่านตัวต้านทานอินพุตแบบอนุกรมเข้าไปที่ขากลับเฟส (−) ส่วนขาไม่กลับเฟส (+) ต่อลงกราวด์</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual describes the inverting amplifier configuration directly: "The input signal is applied through a series input resistor (Ri) to the inverting input (-)... The non-inverting input (+) is grounded."</span>
+        <span class="th">หนังสืออธิบายวงจรขยายแบบกลับเฟสไว้ตรง ๆ ว่า "สัญญาณอินพุตถูกป้อนผ่านตัวต้านทานอินพุตแบบอนุกรม (Ri) เข้าไปที่ขากลับเฟส (-)... ส่วนขาไม่กลับเฟส (+) ต่อลงกราวด์"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.106</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Inverting = flips the sign — the signal enters through the MINUS input.</p>
+        <p class="trick-th">Inverting แปลว่า "กลับเครื่องหมาย" สัญญาณจึงเข้าทางขา (−)</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q15 · p.93–94</p>
+      <p class="qtext">What is the output signal of an ideal op-amp without feedback, if the non-inverting input is grounded and a voltage of +2 V is supplied to the inverting input?<span class="th">สัญญาณเอาต์พุตของออปแอมป์อุดมคติที่ไม่มีฟีดแบ็กเป็นอย่างไร หากอินพุตไม่กลับเฟสต่อกราวด์ และป้อนแรงดัน +2V เข้าที่อินพุตกลับเฟส?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">-Vs — the output saturates at the negative supply rail.<span class="th">-Vs — เอาต์พุตอิ่มตัวที่แรงดันไฟเลี้ยงด้านลบ</span></p>
+      </div>
+      <div class="exp-block">
+        <span>With no feedback, the ideal op-amp's infinite open-loop gain amplifies even the tiniest input difference to its limit. Here the inverting (-) input is higher than the grounded non-inverting (+) input, so the output is driven hard negative — saturating at -Vs (the practical op-amp confirms output is "limited to just below the two supply voltages").</span>
+        <span class="th">เมื่อไม่มีฟีดแบ็ก เกนวงเปิดที่เป็นอนันต์ของออปแอมป์อุดมคติจะขยายผลต่างอินพุตแม้เพียงเล็กน้อยจนสุดขีด อินพุตกลับเฟส (-) มีแรงดันสูงกว่าอินพุตไม่กลับเฟส (+) ที่ต่อกราวด์ไว้ เอาต์พุตจึงถูกผลักไปทางลบจนอิ่มตัวที่ -Vs (ออปแอมป์จริงยืนยันว่าเอาต์พุตถูกจำกัด "ให้อยู่ต่ำกว่าแรงดันไฟเลี้ยงทั้งสองด้านเล็กน้อย")</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.93–94</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Whichever input is HIGHER flips the output to the OPPOSITE extreme — here (−) is higher, so the output slams to −Vs.</p>
+        <p class="trick-th">ขาไหนแรงดันสูงกว่า เอาต์พุตจะพุ่งไปทางตรงข้าม — ที่นี่ขา (−) สูงกว่า เอาต์พุตเลยอิ่มตัวที่ −Vs</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q16 · p.121</p>
+      <p class="qtext">Which statement about a raster board is true?<span class="th">ข้อความใดเกี่ยวกับบอร์ดราสเตอร์ (raster board) ถูกต้อง?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">It has no copper coating — it's plain perforated hard paper.<span class="th">ไม่มีการเคลือบทองแดง — เป็นกระดาษแข็งเจาะรูธรรมดา</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual is explicit: raster boards "consist of hard paper without copper coating" — just a perforated board where components are wired point-to-point with leads or wire on the back. Watch out: a commonly circulated separate answer key for this question states the opposite — that raster boards have copper around each hole. That description actually belongs to the tag raster board, a different type (see the next question).</span>
+        <span class="th">หนังสือระบุชัดเจนว่าบอร์ดราสเตอร์ "ทำจากกระดาษแข็งโดยไม่มีการเคลือบทองแดง" เป็นเพียงบอร์ดเจาะรูที่ต่อวงจรแบบจุดต่อจุดด้วยขาอุปกรณ์หรือสายไฟด้านหลัง ข้อควรระวัง: เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบตรงข้ามกัน คือบอกว่าบอร์ดราสเตอร์มีทองแดงรอบรู ซึ่งจริงๆ แล้วเป็นคำอธิบายของ tag raster board ที่เป็นคนละชนิด (ดูคำถามข้อถัดไป)</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.121</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">A raster board is just bare paper — no coating at all.</p>
+        <p class="trick-th">Raster board คือกระดาษเปล่าๆ ไม่มีทองแดงเลย</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q17 · p.122</p>
+      <p class="qtext">What is the thickness of the copper coating of a tag raster board?<span class="th">ความหนาของการเคลือบทองแดงของบอร์ด tag raster เท่าใด?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">35 μm.<span class="th">35 ไมโครเมตร (μm)</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual states it directly: "Raster boards with copper coating around each hole (tag) are designated 'tag raster boards.' The copper coating has a thickness of 35 μm."</span>
+        <span class="th">หนังสือระบุไว้ตรง ๆ ว่า "บอร์ดราสเตอร์ที่มีการเคลือบทองแดงรอบแต่ละรู (tag) เรียกว่า 'tag raster board' การเคลือบทองแดงมีความหนา 35 μm"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.122</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">Tag board's copper coat: thirty-FIVE, keep that number alive.</p>
+        <p class="trick-th">ทองแดงของ tag board หนา "สามห้า" (35) จำไว้ให้ขึ้นใจ</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q18 · p.136–137</p>
+      <p class="qtext">What is the difference between an open-loop and a closed-loop control system?<span class="th">ความแตกต่างระหว่างระบบควบคุมแบบวงเปิด (open-loop) และวงปิด (closed-loop) คืออะไร?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">An open-loop system has no feedback and can't compare its output to the demand, so it drifts with load, temperature and supply variations. A closed-loop system feeds the output back and compares it to the input to generate an error signal that continuously corrects the output.<span class="th">ระบบวงเปิดไม่มีฟีดแบ็ก จึงเปรียบเทียบเอาต์พุตกับค่าที่ต้องการไม่ได้ ผลลัพธ์จึงคลาดเคลื่อนไปตามโหลด อุณหภูมิ และแรงดันไฟเลี้ยงที่เปลี่ยนไป ส่วนระบบวงปิดจะป้อนเอาต์พุตย้อนกลับมาเปรียบเทียบกับอินพุตเพื่อสร้างสัญญาณผิดพลาดที่คอยแก้ไขเอาต์พุตอย่างต่อเนื่อง</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual states open-loop systems "suffer from the major disadvantage that... factors do not remain constant" (gain, friction, supply variation all cause drift with no correction), while a closed-loop system must be capable of "determining the present conditions by some method of feedback" and "comparing the desired result with the present conditions" to correct any error — this is exactly why the manual calls a closed-loop control system "another name for a servo system."</span>
+        <span class="th">หนังสือระบุว่าระบบวงเปิด "มีข้อเสียหลักคือปัจจัยต่าง ๆ (เช่นเกน แรงเสียดทาน ความผันแปรของไฟเลี้ยง) ไม่คงที่" ทำให้ผลลัพธ์คลาดเคลื่อนโดยไม่มีการแก้ไข ในขณะที่ระบบวงปิดต้องสามารถ "ตรวจสอบสภาวะปัจจุบันด้วยวิธีฟีดแบ็ก" และ "เปรียบเทียบผลลัพธ์ที่ต้องการกับสภาวะปัจจุบัน" เพื่อแก้ไขความผิดพลาด นี่คือเหตุผลที่หนังสือเรียกระบบวงปิดว่า "เป็นอีกชื่อหนึ่งของระบบเซอร์โว (servo system)"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.136–137</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">CLOSED loop CLOSES the circle back to the input — that circle IS the feedback.</p>
+        <p class="trick-th">วงปิด (closed loop) "ปิด" วงจรย้อนกลับไปที่อินพุต วงที่ปิดนั้นแหละคือฟีดแบ็ก</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q19 · p.155–156</p>
+      <p class="qtext">Which description of a torque transmitter synchro is correct?<span class="th">คำอธิบายใดเกี่ยวกับทอร์กทรานสมิตเตอร์ซินโคร (torque transmitter synchro) ถูกต้อง?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">Its rotor is excited by a single-phase AC supply; by transformer action this induces voltages into the three Y-connected stator windings (S1, S2, S3 — spaced 120° apart), and the relative magnitude of those voltages corresponds to the rotor's angular position, transmitting the shaft angle electrically.<span class="th">โรเตอร์ถูกกระตุ้นด้วยไฟ AC เฟสเดียว โดยอาศัยหลักการทรานส์ฟอร์เมอร์เหนี่ยวนำแรงดันเข้าไปในขดลวดสเตเตอร์ที่ต่อแบบ Y ทั้งสามชุด (S1, S2, S3 — วางห่างกัน 120°) ขนาดสัมพัทธ์ของแรงดันเหล่านั้นจะสอดคล้องกับตำแหน่งมุมของโรเตอร์ ทำให้มุมของเพลาถูกส่งผ่านทางไฟฟ้า</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual explains the synchro transmission principle directly: "either the primary or secondary windings are wound on the rotor... The amplitude of voltage induced into the secondary depends upon the relative angular position of the primary/secondary windings," and for the torque synchro specifically, the stator carries "three sets of windings S1, S2 and S3 spaced 120° apart" whose induced voltages are NOT equal in magnitude — that imbalance is what encodes the rotor's angle.</span>
+        <span class="th">หนังสืออธิบายหลักการส่งผ่านของซินโครไว้ตรง ๆ ว่า "ขดลวดปฐมภูมิหรือทุติยภูมิจะพันอยู่บนโรเตอร์... ขนาดของแรงดันที่เหนี่ยวนำเข้าไปในขดทุติยภูมิขึ้นอยู่กับตำแหน่งมุมสัมพัทธ์ของขดปฐมภูมิ/ทุติยภูมิ" และสำหรับทอร์กซินโครโดยเฉพาะ สเตเตอร์มี "ขดลวดสามชุดคือ S1, S2 และ S3 วางห่างกัน 120°" ซึ่งแรงดันที่เหนี่ยวนำได้จะไม่เท่ากันในแต่ละขด ความไม่เท่ากันนี้เองที่เข้ารหัสมุมของโรเตอร์เอาไว้</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.155–156</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">TX TRANSMITS — it turns an angle into a signal and sends it out to a receiver.</p>
+        <p class="trick-th">TX คือตัว "ส่ง" (Transmit) แปลงมุมเป็นสัญญาณแล้วส่งออกไปยังตัวรับ</p>
+      </div>
+    </div>
+<div class="item">
+      <p class="qn">Q20 · p.166</p>
+      <p class="qtext">What is the code of a control transformer?<span class="th">รหัสของคอนโทรลทรานส์ฟอร์เมอร์ (control transformer) คืออะไร?</span></p>
+      <div class="ans-block">
+        <span class="ans-label">ANSWER · คำตอบ</span>
+        <p class="ans-main">CT<span class="th">CT</span></p>
+      </div>
+      <div class="exp-block">
+        <span>The manual's standard synchro code table lists it directly: "CT — Control Transformer."</span>
+        <span class="th">ตารางรหัสซินโครมาตรฐานในหนังสือระบุไว้ตรงตัวว่า "CT — Control Transformer"</span>
+      </div>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.166</div>
+      <div class="trick-block">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en">CT is the one code that just spells itself: Control Transformer → CT.</p>
+        <p class="trick-th">CT เป็นรหัสเดียวที่สะกดตรงตัวเลย: Control Transformer → CT</p>
+      </div>
+    </div>
+  <footer>
+    Source: Module 4 — Electronic Fundamentals CAT-B1.pdf (176 pages) · real oral/recall exam content · every answer page-cited
+  </footer>
+</div>
+</body>
+</html>

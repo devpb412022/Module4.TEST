@@ -280,6 +280,13 @@
     color: var(--text-dim);
     font-size: 13px;
   }
+  .trick-block {
+    margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--amber-dim); border-radius: var(--radius);
+    background: rgba(255,176,32,0.05);
+  }
+  .trick-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--amber); display: block; margin-bottom: 4px; }
+  .trick-en { margin: 0; font-size: 13px; line-height: 1.5; color: var(--text); }
+  .trick-th { margin: 5px 0 0; padding-top: 5px; border-top: 1px dashed var(--amber-dim); font-family: 'Sarabun', sans-serif; font-size: 12.5px; line-height: 1.6; color: var(--text-dim); }
   .cite {
     display: inline-block;
     margin-top: 8px;
@@ -840,6 +847,49 @@ const BANK = [
 }
 ];
 
+const TRICKS = [
+  { en: "G before S, 0.3 before 0.7 — alphabetical order matches numeric order (Germanium/0.3V, Silicon/0.7V).",
+    th: "G มาก่อน S ตามตัวอักษร เหมือน 0.3 มาก่อน 0.7 ตามตัวเลข (เจอร์เมเนียม/0.3V, ซิลิคอน/0.7V)" },
+  { en: "A diode is a one-way street — you can only prove that by trying both directions.",
+    th: "ไดโอดเป็นถนนทางเดียว จะพิสูจน์ได้ก็ต้องลองทั้งสองทิศทางเท่านั้น" },
+  { en: "Boron Borrows an electron short, leaving a hole — hence P-type. (Same 3 elements as the N-type question, just Boron is the one that's correct here.)",
+    th: "โบรอนขาดอิเล็กตรอนไป 1 ตัว จึงเหลือโฮล กลายเป็นชนิด P (ใช้ธาตุ 3 ตัวเดียวกับข้อ n-type แค่สลับว่าโบรอนคือตัวที่ถูก)" },
+  { en: "Reverse bias = Roadblock — the meter reads Overload (OL).",
+    th: "Reverse bias คือ \"ทางตัน\" มิเตอร์เลยขึ้น Overload (OL)" },
+  { en: "0.3 × 4 = 1.2 — just like 3×4=12, add the decimal point back.",
+    th: "0.3 × 4 = 1.2 — เหมือนคูณ 3×4=12 แล้วเติมจุดทศนิยมกลับไป" },
+  { en: "Reverse = Retreat — carriers retreat from the junction, so the empty (depletion) zone grows.",
+    th: "Reverse คือ \"ถอย\" — พาหะถอยห่างจากรอยต่อ พื้นที่ว่าง (depletion) เลยกว้างขึ้น" },
+  { en: "0.7 × 3 = 2.1 — think \"7×3=21\", add the decimal point back.",
+    th: "0.7 × 3 = 2.1 — คิดแบบ 7×3=21 แล้วเติมจุดทศนิยมกลับไป" },
+  { en: "TRIAC works TWO ways — TWO Anodes (A1, A2) plus a Gate.",
+    th: "TRIAC นำกระแสได้สองทาง จึงมีสอง Anode (A1, A2) บวก Gate" },
+  { en: "BI-polar = BJT — \"BI\" means two, matching its two junctions (base-emitter, base-collector).",
+    th: "BI-polar = BJT — \"BI\" แปลว่าสอง ตรงกับสองรอยต่อของมัน (เบส-อิมิตเตอร์, เบส-คอลเลกเตอร์)" },
+  { en: "A transistor's B-E junction is just a diode — same silicon rule, same 0.7V.",
+    th: "รอยต่อ B-E ของทรานซิสเตอร์ก็คือไดโอดธรรมดา ใช้กฎซิลิคอนเดียวกัน คือ 0.7V" },
+  { en: "\"Big Cats Eat\" — B, C, E, in that order.",
+    th: "ท่องแบบ \"บี-ซี-อี\" ตามลำดับ: เบส-คอลเลกเตอร์-อิมิตเตอร์" },
+  { en: "Collector's on top, Emitter's got the arrow at the bottom — top-to-bottom on the symbol reads C, B, E.",
+    th: "คอลเลกเตอร์อยู่บน อิมิตเตอร์มีลูกศรอยู่ล่าง ไล่จากบนลงล่างของสัญลักษณ์จะได้ C-B-E" },
+  { en: "An op-amp needs \"5 fingers\" to work: 2 inputs, 1 output, 2 power pins.",
+    th: "ออปแอมป์ต้องการ \"5 นิ้ว\" ถึงจะทำงานได้: อินพุต 2 เอาต์พุต 1 ไฟเลี้ยง 2" },
+  { en: "Inverting = flips the sign — the signal enters through the MINUS input.",
+    th: "Inverting แปลว่า \"กลับเครื่องหมาย\" สัญญาณจึงเข้าทางขา (−)" },
+  { en: "Whichever input is HIGHER flips the output to the OPPOSITE extreme — here (−) is higher, so the output slams to −Vs.",
+    th: "ขาไหนแรงดันสูงกว่า เอาต์พุตจะพุ่งไปทางตรงข้าม — ที่นี่ขา (−) สูงกว่า เอาต์พุตเลยอิ่มตัวที่ −Vs" },
+  { en: "A raster board is just bare paper — no coating at all.",
+    th: "Raster board คือกระดาษเปล่าๆ ไม่มีทองแดงเลย" },
+  { en: "Tag board's copper coat: thirty-FIVE, keep that number alive.",
+    th: "ทองแดงของ tag board หนา \"สามห้า\" (35) จำไว้ให้ขึ้นใจ" },
+  { en: "CLOSED loop CLOSES the circle back to the input — that circle IS the feedback.",
+    th: "วงปิด (closed loop) \"ปิด\" วงจรย้อนกลับไปที่อินพุต วงที่ปิดนั้นแหละคือฟีดแบ็ก" },
+  { en: "TX TRANSMITS — it turns an angle into a signal and sends it out to a receiver.",
+    th: "TX คือตัว \"ส่ง\" (Transmit) แปลงมุมเป็นสัญญาณแล้วส่งออกไปยังตัวรับ" },
+  { en: "CT is the one code that just spells itself: Control Transformer → CT.",
+    th: "CT เป็นรหัสเดียวที่สะกดตรงตัวเลย: Control Transformer → CT" }
+];
+
 /* ---------- State ---------- */
 let lang = 'en';
 let order = [];       // shuffled question indices into BANK
@@ -911,6 +961,11 @@ function render() {
       <span id="fbTextEn"></span>
       <div class="exp-th" id="fbTextTh" style="display:none;"></div>
       <div class="cite" id="fbCite"></div>
+      <div class="trick-block" id="fbTrick">
+        <span class="trick-label">🧠 MEMORY TRICK · เคล็ดลับการจำ</span>
+        <p class="trick-en" id="fbTrickEn"></p>
+        <p class="trick-th" id="fbTrickTh" style="display:none;"></p>
+      </div>
     </div>
     <div class="nav-row">
       <button class="next-btn" id="nextBtn" onclick="nextQuestion()">${current === BANK.length - 1 ? (lang==='th'?'ดูผลลัพธ์ →':'See Results →') : (lang==='th'?'ข้อถัดไป →':'Next →')}</button>
@@ -949,6 +1004,10 @@ function selectOption(origIdx) {
   fbTh.textContent = q.th.explain;
   fbTh.style.display = 'block';
   document.getElementById('fbCite').textContent = `Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}`;
+  document.getElementById('fbTrickEn').textContent = TRICKS[qIndex].en;
+  const fbTrickTh = document.getElementById('fbTrickTh');
+  fbTrickTh.textContent = TRICKS[qIndex].th;
+  fbTrickTh.style.display = 'block';
   document.getElementById('scoreLabel').textContent = `${score} correct`;
   document.getElementById('nextBtn').classList.add('show');
 }
