@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 — Answer-Key Accuracy Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090b; --panel: #0e1316; --panel-2: #121820; --line: #223038;
+    --amber: #ffb020; --amber-dim: #8a5f18; --cyan: #35e6e0; --cyan-dim: #1a6e6b;
+    --red: #ff4d4d; --text: #d9e4e6; --text-dim: #7d9296;
+    --font-head: 'Chakra Petch', 'Sarabun', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Sarabun', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+      --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+    --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--font-body);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px; background-attachment: fixed; background-position: center;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,77,77,0.05), transparent 60%);
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 18px 16px 48px; }
+
+  .hud {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border-radius: var(--radius); padding: 16px 16px 14px; margin-bottom: 16px;
+  }
+  .hud-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--red); margin: 0 0 4px; }
+  .hud-title { font-family: var(--font-head); font-weight: 600; font-size: 21px; line-height: 1.3; margin: 0; color: var(--text); }
+  .hud-title .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 14.5px; font-weight: 400; color: var(--text-dim); margin-top: 4px; }
+  .score-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .score-chip {
+    font-family: var(--font-mono); font-size: 12px; padding: 6px 12px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--text-dim);
+  }
+  .score-chip.good { border-color: var(--cyan-dim); color: var(--cyan); }
+  .score-chip.bad { border-color: var(--red); color: var(--red); }
+
+  .sect-title { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: var(--amber); margin: 26px 2px 10px; }
+
+  .overview-card { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 8px; }
+  .overview-card p { margin: 0 0 4px; font-size: 14.5px; line-height: 1.65; }
+  .overview-card .th { display: block; font-family: 'Sarabun', sans-serif; color: var(--text-dim); font-size: 13.5px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+  /* problem item cards */
+  .prob-card { border: 1px solid var(--red); background: var(--panel); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; }
+  .prob-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+  .prob-num { font-family: var(--font-mono); font-size: 11px; color: var(--red); letter-spacing: 0.05em; }
+  .prob-sev { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; }
+  .prob-q { font-family: var(--font-head); font-size: 16.5px; font-weight: 500; margin: 0 0 4px; }
+  .prob-q .th { display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+
+  .diff-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .diff-box { flex: 1; min-width: 240px; border-radius: var(--radius); padding: 10px 12px; }
+  .diff-box.wrong { border: 1px solid var(--red); background: rgba(255,77,77,0.06); }
+  .diff-box.right { border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.06); }
+  .diff-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; margin: 0 0 4px; display: block; }
+  .diff-box.wrong .diff-label { color: var(--red); }
+  .diff-box.right .diff-label { color: var(--cyan); }
+  .diff-box p { margin: 0; font-size: 13.5px; line-height: 1.5; }
+  .diff-box .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
+
+  .exp-block {
+    margin-top: 12px; padding: 10px 12px; border: 1px solid var(--line); background: var(--panel-2);
+    border-radius: var(--radius); font-size: 13.5px; line-height: 1.55; color: var(--text-dim);
+  }
+  .exp-block .th { display: block; font-family: 'Sarabun', sans-serif; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .cite {
+    display: inline-block; margin-top: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--amber);
+    border: 1px solid var(--amber-dim); border-radius: var(--radius); padding: 2px 7px;
+  }
+
+  /* confirmed-correct compact table */
+  .ok-table-wrap { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); overflow: hidden; }
+  table.ok-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.ok-table th {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--text-dim);
+    text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); background: var(--panel-2);
+  }
+  table.ok-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.ok-table tr:last-child td { border-bottom: none; }
+  table.ok-table td.qn { font-family: var(--font-mono); color: var(--cyan); width: 24px; }
+  table.ok-table td.pg { font-family: var(--font-mono); color: var(--amber); font-size: 11.5px; white-space: nowrap; }
+  table.ok-table .th { display: block; font-family: 'Sarabun', sans-serif; color: var(--text-dim); font-size: 11.5px; margin-top: 2px; }
+
+  .bottom-card { border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.05); border-radius: var(--radius); padding: 16px 18px; margin-top: 8px; }
+  .bottom-card p { margin: 0 0 4px; font-size: 14px; line-height: 1.6; }
+  .bottom-card .th { display: block; font-family: 'Sarabun', sans-serif; color: var(--text-dim); font-size: 13px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+  footer { margin-top: 26px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.04em; }
+
+  @media (max-width: 420px) {
+    .hud-title { font-size: 18px; }
+    .prob-q { font-size: 15.5px; }
+    table.ok-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud">
+    <p class="hud-tag">PART66 · CAT-B1 · MODULE 4 — ANSWER-KEY CHECK</p>
+    <h1 class="hud-title">Module4_Final.pdf — Accuracy Check
+      <span class="th">ตรวจสอบความถูกต้องของเฉลย Module4_Final.pdf เทียบกับตำราต้นฉบับ</span>
+    </h1>
+    <div class="score-row">
+      <span class="score-chip good">16 / 20 correct match the book · ตรงกับตำรา</span>
+      <span class="score-chip bad">4 / 20 wrong or incomplete · ผิดหรือไม่ครบ</span>
+    </div>
+  </div>
+
+  <p class="sect-title">— OVERVIEW · ภาพรวม —</p>
+  <div class="overview-card">
+    <p>16 of the 20 answers in <i>Module4_Final.pdf</i> match the textbook (<i>Module_4_Electronic_Fundamentals_CAT-B1.pdf</i>, 176 pages), checked page-by-page. 4 items are wrong or incomplete. Item #16 directly contradicts both the book and PB's own photographed question sheet.</p>
+    <span class="th">คำตอบ 16 จาก 20 ข้อในไฟล์ <i>Module4_Final.pdf</i> ตรงกับตำราต้นฉบับ (<i>Module_4_Electronic_Fundamentals_CAT-B1.pdf</i>, 176 หน้า) ซึ่งตรวจสอบทีละหน้าแล้ว มี 4 ข้อที่ผิดหรือตอบไม่ครบ โดยข้อ #16 ขัดแย้งโดยตรงกับทั้งตำราและภาพคำถามต้นฉบับที่พี่ถ่ายมาให้เอง</span>
+  </div>
+
+  <p class="sect-title">— 4 PROBLEM ITEMS · 4 ข้อที่มีปัญหา —</p>
+
+  <div class="prob-card">
+    <div class="prob-head"><span class="prob-num">ITEM #16 · p.121</span><span class="prob-sev">WRONG · ผิด</span></div>
+    <p class="prob-q">Which statement about a raster board is true?
+      <span class="th">ข้อความใดเกี่ยวกับบอร์ดราสเตอร์ (raster board) ถูกต้อง?</span>
+    </p>
+    <div class="diff-row">
+      <div class="diff-box wrong">
+        <span class="diff-label">FILE SAYS · ไฟล์ตอบว่า</span>
+        <p>Copper coating around each hole.<span class="th">มีการเคลือบทองแดงรอบแต่ละรู</span></p>
+      </div>
+      <div class="diff-box right">
+        <span class="diff-label">BOOK SAYS · ตำราระบุว่า</span>
+        <p>No copper coating — plain perforated hard paper.<span class="th">ไม่มีการเคลือบทองแดง — เป็นกระดาษแข็งเจาะรูธรรมดา</span></p>
+      </div>
+    </div>
+    <div class="exp-block">
+      <span>The book states raster boards "consist of hard paper without copper coating." A board with copper around each hole is a different type — the <i>tag raster board</i> (see item #17) — not the plain raster board this question names. This also matches the highlighted answer on PB's original photographed question sheet.</span>
+      <span class="th">หนังสือระบุว่าบอร์ดราสเตอร์ "ทำจากกระดาษแข็งโดยไม่มีการเคลือบทองแดง" ส่วนบอร์ดที่มีทองแดงรอบรูเป็นคนละชนิด คือ <i>tag raster board</i> (ดูข้อ #17) ไม่ใช่บอร์ดราสเตอร์ธรรมดาที่คำถามข้อนี้ถาม และตรงกับคำตอบที่ไฮไลท์ไว้ในภาพคำถามต้นฉบับของพี่ด้วย</span>
+    </div>
+    <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.121</div>
+  </div>
+
+  <div class="prob-card">
+    <div class="prob-head"><span class="prob-num">ITEM #8 · p.46</span><span class="prob-sev">WRONG TERM · ศัพท์ผิด</span></div>
+    <p class="prob-q">What are the three leads of a TRIAC called?
+      <span class="th">ขาทั้งสามของ TRIAC เรียกว่าอะไร?</span>
+    </p>
+    <div class="diff-row">
+      <div class="diff-box wrong">
+        <span class="diff-label">FILE SAYS · ไฟล์ตอบว่า</span>
+        <p>MT1, MT2 and Gate.<span class="th">MT1, MT2 และ Gate</span></p>
+      </div>
+      <div class="diff-box right">
+        <span class="diff-label">BOOK SAYS · ตำราระบุว่า</span>
+        <p>A1, A2 and G.<span class="th">A1, A2 และ G</span></p>
+      </div>
+    </div>
+    <div class="exp-block">
+      <span>This book's own Triac circuit symbol (Figure 42, p.46) labels the leads A1, A2 and G — confirmed by viewing the figure directly. MT1/MT2 is standard terminology in other textbooks, just not this book's own labeling.</span>
+      <span class="th">สัญลักษณ์วงจร Triac ของหนังสือเล่มนี้เอง (Figure 42 หน้า 46) ระบุขาไว้ว่า A1, A2 และ G — ยืนยันจากการเปิดดูภาพจริง ส่วน MT1/MT2 เป็นศัพท์มาตรฐานที่ใช้ในตำราเล่มอื่น แต่ไม่ใช่ที่หนังสือเล่มนี้ใช้เอง</span>
+    </div>
+    <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.46</div>
+  </div>
+
+  <div class="prob-card">
+    <div class="prob-head"><span class="prob-num">ITEM #13 · p.93</span><span class="prob-sev">INCOMPLETE · ไม่ครบ</span></div>
+    <p class="prob-q">What connections does an operational amplifier have?
+      <span class="th">ออปแอมป์มีขาต่อ (connections) อะไรบ้าง?</span>
+    </p>
+    <div class="diff-row">
+      <div class="diff-box wrong">
+        <span class="diff-label">FILE SAYS · ไฟล์ตอบว่า</span>
+        <p>Two inputs and one output only.<span class="th">มีเพียงอินพุตสองขาและเอาต์พุตหนึ่งขา</span></p>
+      </div>
+      <div class="diff-box right">
+        <span class="diff-label">BOOK ADDS · ตำราเพิ่มเติมว่า</span>
+        <p>...plus two DC supply pins (+V and −V).<span class="th">...บวกขาไฟเลี้ยงกระแสตรงอีกสองขา (+V และ −V)</span></p>
+      </div>
+    </div>
+    <div class="exp-block">
+      <span>The book states the typical op-amp also needs two DC supply voltages, one positive and one negative. A complete answer has five connections: inverting input, non-inverting input, output, +V supply, −V supply.</span>
+      <span class="th">หนังสือระบุว่าออปแอมป์ทั่วไปยังต้องการแรงดันไฟเลี้ยงกระแสตรงสองค่าด้วย คือค่าหนึ่งเป็นบวกอีกค่าเป็นลบ คำตอบที่ครบจึงต้องมี 5 ขา: อินพุตกลับเฟส, อินพุตไม่กลับเฟส, เอาต์พุต, ไฟเลี้ยง +V และไฟเลี้ยง −V</span>
+    </div>
+    <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.93</div>
+  </div>
+
+  <div class="prob-card">
+    <div class="prob-head"><span class="prob-num">ITEM #4 · p.28</span><span class="prob-sev">INCOMPLETE · ไม่ครบ</span></div>
+    <p class="prob-q">What does the display on a digital multimeter show when testing a silicon rectifier diode in the reverse direction?
+      <span class="th">หน้าจอ DMM แสดงผลอย่างไรเมื่อทดสอบไดโอดเรียงกระแสซิลิคอนในทิศทาง reverse?</span>
+    </p>
+    <div class="diff-row">
+      <div class="diff-box wrong">
+        <span class="diff-label">FILE SAYS · ไฟล์ตอบว่า</span>
+        <p>OL only.<span class="th">OL เท่านั้น</span></p>
+      </div>
+      <div class="diff-box right">
+        <span class="diff-label">BOOK SAYS · ตำราระบุว่า</span>
+        <p>OL, or a voltage near the meter's limit (e.g. ~2.5V).<span class="th">OL หรือแรงดันใกล้ขีดจำกัดของมิเตอร์ (เช่น ~2.5V)</span></p>
+      </div>
+    </div>
+    <div class="exp-block">
+      <span>The book's worked example shows a good diode in reverse bias may read about 2.5V on some meters, and separately notes the display may also show 'OL' — either reading is normal, not OL exclusively.</span>
+      <span class="th">ตัวอย่างในหนังสือแสดงว่าไดโอดที่ดีเมื่อ reverse bias อาจอ่านค่าได้ประมาณ 2.5V บนมิเตอร์บางรุ่น และยังระบุแยกว่าหน้าจออาจขึ้น 'OL' ได้ด้วย — ทั้งสองแบบถือว่าปกติ ไม่ใช่ต้องเป็น OL เท่านั้น</span>
+    </div>
+    <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.28</div>
+  </div>
+
+  <p class="sect-title">— 16 CONFIRMED CORRECT · 16 ข้อที่ตรงกับตำรา —</p>
+  <div class="ok-table-wrap">
+    <table class="ok-table">
+      <tr><th>#</th><th>Question · คำถาม</th><th>Answer · คำตอบ</th><th>p.</th></tr>
+      <tr><td class="qn">1</td><td>Germanium diode forward drop<span class="th">แรงดันตกคร่อมไดโอดเจอร์เมเนียม</span></td><td>0.3 V</td><td class="pg">20</td></tr>
+      <tr><td class="qn">2</td><td>Diode test direction<span class="th">ทิศทางทดสอบไดโอด</span></td><td>Both · ทั้งสองทิศทาง</td><td class="pg">28</td></tr>
+      <tr><td class="qn">3</td><td>P-type silicon doping material<span class="th">วัสดุโดปชนิด P</span></td><td>Boron · โบรอน</td><td class="pg">15</td></tr>
+      <tr><td class="qn">5</td><td>4 germanium diodes in series<span class="th">เจอร์เมเนียม 4 ตัวอนุกรม</span></td><td>1.2 V</td><td class="pg">20–21</td></tr>
+      <tr><td class="qn">6</td><td>P-N junction, reverse bias<span class="th">P-N junction ไบแอสย้อนกลับ</span></td><td>Depletion region widens<span class="th">depletion region ขยาย</span></td><td class="pg">20</td></tr>
+      <tr><td class="qn">7</td><td>3 silicon diodes in series<span class="th">ซิลิคอน 3 ตัวอนุกรม</span></td><td>2.1 V</td><td class="pg">49</td></tr>
+      <tr><td class="qn">9</td><td>Other name for bipolar transistor<span class="th">ชื่ออื่นของทรานซิสเตอร์ไบโพลาร์</span></td><td>BJT</td><td class="pg">76</td></tr>
+      <tr><td class="qn">10</td><td>Silicon transistor B-E voltage<span class="th">แรงดันเบส-อิมิตเตอร์ซิลิคอน</span></td><td>0.7 V</td><td class="pg">53</td></tr>
+      <tr><td class="qn">11</td><td>Three BJT leads<span class="th">ขาทั้งสามของ BJT</span></td><td>Base, Collector, Emitter<span class="th">เบส คอลเลกเตอร์ อิมิตเตอร์</span></td><td class="pg">53</td></tr>
+      <tr><td class="qn">12</td><td>Correctly labeled transistor picture<span class="th">ภาพทรานซิสเตอร์ที่ติดฉลากถูก</span></td><td>Picture A · ภาพ A</td><td class="pg">53</td></tr>
+      <tr><td class="qn">14</td><td>Inverting amp input location<span class="th">จุดป้อนอินพุตของแอมป์กลับเฟส</span></td><td>Via Ri to (−); (+) grounded<span class="th">ผ่าน Ri เข้า (−); (+) ต่อกราวด์</span></td><td class="pg">106</td></tr>
+      <tr><td class="qn">15</td><td>Ideal op-amp, no feedback, +2V on (−)<span class="th">ออปแอมป์ไม่มีฟีดแบ็ก +2V เข้า (−)</span></td><td>−Vs</td><td class="pg">93–94</td></tr>
+      <tr><td class="qn">17</td><td>Tag raster board copper thickness<span class="th">ความหนาทองแดงของ tag raster board</span></td><td>35 μm</td><td class="pg">122</td></tr>
+      <tr><td class="qn">18</td><td>Open-loop vs closed-loop<span class="th">วงเปิด vs วงปิด</span></td><td>Open = no feedback; Closed = feedback<span class="th">วงเปิด = ไม่มีฟีดแบ็ก; วงปิด = มีฟีดแบ็ก</span></td><td class="pg">136–137</td></tr>
+      <tr><td class="qn">19</td><td>Torque transmitter synchro<span class="th">ทอร์กทรานสมิตเตอร์ซินโคร</span></td><td>Transmits shaft angle electrically<span class="th">ส่งมุมเพลาทางไฟฟ้า</span></td><td class="pg">155–156</td></tr>
+      <tr><td class="qn">20</td><td>Control transformer code<span class="th">รหัสของ control transformer</span></td><td>CT</td><td class="pg">166</td></tr>
+    </table>
+  </div>
+
+  <p class="sect-title">— BOTTOM LINE · สรุป —</p>
+  <div class="bottom-card">
+    <p>PB's existing mock-test artifacts — the MCQ set, the oral-review set, and the combined 40-question file — already have all four of these points right, so no updates are needed there. <i>Module4_Final.pdf</i> appears to come from a different source than the textbook used for the Part-66 exam. If studying from it directly, #16 is the one to flag first, since it states the opposite of what the book (and PB's own photographed sheet) say.</p>
+    <span class="th">ชุด mock test ที่ทำให้ก่อนหน้านี้ (ชุดปรนัย, ชุดทบทวนปากเปล่า, และไฟล์รวม 40 ข้อ) ตอบตรงตามตำราอยู่แล้วครบทั้ง 4 จุดนี้ ไม่ต้องแก้ไขอะไรเพิ่ม ไฟล์ <i>Module4_Final.pdf</i> ดูเหมือนจะมาจากแหล่งข้อมูลคนละแหล่งกับตำราที่ใช้สอบ Part-66 จริง หากจะใช้ไฟล์นี้อ่านโดยตรง ข้อ #16 คือข้อที่ควรระวังที่สุด เพราะตอบตรงข้ามกับทั้งตำราและภาพคำถามต้นฉบับของพี่เอง</span>
+  </div>
+
+  <footer>
+    Cross-checked against Module 4 — Electronic Fundamentals CAT-B1.pdf (176 pages) · bilingual EN/TH reference
+  </footer>
+</div>
+</body>
+</html>

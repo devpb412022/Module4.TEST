@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 — Combined Mock Test (40 Q)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090b;
+    --panel: #0e1316;
+    --panel-2: #121820;
+    --line: #223038;
+    --amber: #ffb020;
+    --amber-dim: #8a5f18;
+    --cyan: #35e6e0;
+    --cyan-dim: #1a6e6b;
+    --red: #ff4d4d;
+    --text: #d9e4e6;
+    --text-dim: #7d9296;
+    --font-head: 'Chakra Petch', 'Sarabun', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Sarabun', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+      --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+    --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--font-body);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px; background-attachment: fixed; background-position: center;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,176,32,0.05), transparent 60%);
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 18px 16px 48px; }
+
+  .hud {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border-radius: var(--radius); padding: 16px 16px 14px; margin-bottom: 14px;
+  }
+  .hud-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .hud-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--cyan); margin: 0 0 4px; }
+  .hud-title { font-family: var(--font-head); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 0; color: var(--text); }
+  .hud-title .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 13.5px; font-weight: 400; color: var(--text-dim); margin-top: 2px; }
+  .hud-note { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); margin: 6px 0 0; }
+  .hud-controls { display: flex; gap: 6px; flex-shrink: 0; }
+  .pill-btn {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    background: transparent; border: 1px solid var(--line); color: var(--text-dim);
+    padding: 6px 10px; border-radius: var(--radius); cursor: pointer;
+  }
+  .pill-btn.active { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
+  .pill-btn:focus-visible, button:focus-visible, .opt:focus-visible, .svgopt:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+  .meter-row { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+  .meter { flex: 1; height: 6px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .meter-fill { height: 100%; background: linear-gradient(90deg, var(--amber-dim), var(--amber)); width: 0%; transition: width .3s ease; }
+
+  .card { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 20px 18px; margin-bottom: 14px; }
+  .qnum { font-family: var(--font-mono); font-size: 12px; color: var(--amber); letter-spacing: 0.06em; margin: 0 0 8px; display: flex; justify-content: space-between; gap: 8px; }
+  .qnum .tset { color: var(--text-dim); }
+  .qtext { font-family: var(--font-head); font-size: 18px; font-weight: 500; line-height: 1.4; margin: 0; }
+  .qtext .th { display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; font-size: 15px; color: var(--text-dim); margin-top: 6px; }
+
+  /* MCQ options */
+  .options { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    text-align: left; width: 100%; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    border-radius: var(--radius); padding: 11px 12px; font-family: var(--font-body); font-size: 14.5px;
+    cursor: pointer; display: flex; gap: 10px; align-items: flex-start; transition: border-color .15s ease, background .15s ease;
+  }
+  .opt .k { font-family: var(--font-mono); color: var(--text-dim); flex-shrink: 0; }
+  .opt .body { flex: 1; }
+  .opt .body .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 12.5px; color: var(--text-dim); margin-top: 2px; }
+  .opt:hover:not(:disabled) { border-color: var(--amber-dim); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { border-color: var(--cyan); background: rgba(53,230,224,0.08); }
+  .opt.correct .k { color: var(--cyan); }
+  .opt.wrong { border-color: var(--red); background: rgba(255,77,77,0.08); }
+  .opt.wrong .k { color: var(--red); }
+  .opt.dim { opacity: .55; }
+
+  .feedback { margin-top: 14px; border-radius: var(--radius); padding: 12px 14px; font-size: 14px; line-height: 1.55; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.06); }
+  .feedback.bad { border: 1px solid var(--red); background: rgba(255,77,77,0.06); }
+  .feedback .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+  .feedback.ok .lbl { color: var(--cyan); }
+  .feedback.bad .lbl { color: var(--red); }
+  .feedback .exp-th { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); font-family: 'Sarabun', sans-serif; color: var(--text-dim); font-size: 13px; }
+
+  /* Recall (reveal / self-mark) */
+  .reveal-row { margin-top: 18px; display: flex; justify-content: center; }
+  .reveal-btn {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    background: transparent; border: 1px solid var(--cyan-dim); color: var(--cyan);
+    padding: 10px 20px; border-radius: var(--radius); cursor: pointer; width: 100%;
+  }
+  .answer-block { display: none; margin-top: 16px; }
+  .answer-block.show { display: block; }
+  .ans-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--cyan); margin: 0 0 6px; }
+  .ans-main { font-family: var(--font-head); font-size: 16px; font-weight: 500; margin: 0 0 4px; line-height: 1.4; }
+  .ans-main .th { display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+  .exp-block {
+    margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); background: var(--panel-2);
+    border-radius: var(--radius); font-size: 13.5px; line-height: 1.55; color: var(--text-dim);
+  }
+  .exp-block .th { display: block; font-family: 'Sarabun', sans-serif; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .cite {
+    display: inline-block; margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--amber);
+    border: 1px solid var(--amber-dim); border-radius: var(--radius); padding: 2px 7px;
+  }
+  .self-mark-row { display: flex; gap: 8px; margin-top: 16px; }
+  .mark-btn {
+    flex: 1; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em;
+    padding: 11px 10px; border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line);
+    background: var(--panel-2); color: var(--text);
+  }
+  .mark-btn.got:hover { border-color: var(--cyan); color: var(--cyan); }
+  .mark-btn.missed:hover { border-color: var(--red); color: var(--red); }
+
+  /* choice-type (transistor diagram) */
+  .svg-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+  .svgopt {
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 8px 4px 10px; cursor: pointer; text-align: center;
+  }
+  .svgopt svg { width: 100%; height: auto; }
+  .svgopt .lab { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; display: block; }
+  .svgopt:hover:not(:disabled) { border-color: var(--amber-dim); }
+  .svgopt.correct { border-color: var(--cyan); background: rgba(53,230,224,0.08); }
+  .svgopt.wrong { border-color: var(--red); background: rgba(255,77,77,0.08); }
+  .svgopt.dim { opacity: .5; }
+  .svgopt:disabled { cursor: default; }
+
+  .nav-row { display: flex; justify-content: flex-end; margin-top: 16px; }
+  .next-btn {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    background: var(--amber); color: #17110a; border: none; padding: 10px 18px;
+    border-radius: var(--radius); cursor: pointer; display: none;
+  }
+  .next-btn.show { display: inline-block; }
+
+  .results { display: none; }
+  .results.show { display: block; }
+  .score-panel { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 24px 20px; text-align: center; margin-bottom: 16px; }
+  .score-big { font-family: var(--font-head); font-size: 48px; font-weight: 700; line-height: 1; margin: 6px 0; }
+  .score-big.pass { color: var(--cyan); }
+  .score-big.fail { color: var(--red); }
+  .score-sub { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.05em; }
+  .badge { display: inline-block; margin-top: 10px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; padding: 5px 12px; border-radius: 999px; }
+  .badge.pass { color: var(--cyan); border: 1px solid var(--cyan-dim); background: rgba(53,230,224,0.08); }
+  .badge.fail { color: var(--red); border: 1px solid var(--red); background: rgba(255,77,77,0.08); }
+  .threshold-note { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); }
+  .action-row { display: flex; gap: 8px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+  .action-btn { font-family: var(--font-mono); font-size: 12.5px; background: transparent; border: 1px solid var(--amber-dim); color: var(--amber); padding: 9px 14px; border-radius: var(--radius); cursor: pointer; }
+  .action-btn.primary { background: var(--amber); color: #17110a; border-color: var(--amber); }
+
+  .review-title { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; margin: 20px 2px 8px; }
+  .review-item { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 8px; }
+  .review-item .rq { font-family: var(--font-head); font-size: 14.5px; margin: 0 0 6px; }
+  .review-item .rmark { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; margin-right: 8px; }
+  .rmark.correct-mark { color: var(--cyan); }
+  .rmark.wrong-mark { color: var(--red); }
+  .review-item .ra { font-size: 13px; color: var(--text-dim); margin: 4px 0; }
+  .review-item .ra b { color: var(--text); font-weight: 500; }
+  .review-item .rexp { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+  footer { margin-top: 24px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.04em; }
+
+  @media (max-width: 420px) {
+    .hud-title { font-size: 17px; }
+    .qtext { font-size: 16.5px; }
+    .score-big { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud">
+    <div class="hud-top">
+      <div>
+        <p class="hud-tag">PART66 · CAT-B1 · MODULE 4 — COMBINED SET</p>
+        <h1 class="hud-title">Electronic Fundamentals — Full Review (40 Q)
+          <span class="th" id="titleTh">ทบทวนพื้นฐานอิเล็กทรอนิกส์ โมดูล 4 — ชุดรวม 40 ข้อ</span>
+        </h1>
+      </div>
+      <div class="hud-controls">
+        <button class="pill-btn active" id="langEn" onclick="setLang('en')">EN</button>
+        <button class="pill-btn" id="langTh" onclick="setLang('th')">TH</button>
+      </div>
+    </div>
+    <p class="hud-note" id="hudNote">Multiple-choice set (20) + oral/recall set (20) merged as-is — 5 overlapping questions kept, not deduplicated.</p>
+    <div class="meter-row">
+      <span id="progressLabel">Q 1 / 40</span>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+      <span id="scoreLabel">0 correct</span>
+    </div>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div class="results" id="results">
+    <div class="score-panel">
+      <div class="score-sub" id="resultTag">RESULT</div>
+      <div class="score-big" id="scoreBig">0 / 40</div>
+      <div class="score-sub" id="scorePct">0%</div>
+      <div class="badge" id="passBadge">PASS</div>
+      <div class="threshold-note" id="thresholdNote">Pass threshold: 75%</div>
+    </div>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="restartQuiz(true)">↻ Shuffle &amp; Retake</button>
+      <button class="action-btn" onclick="restartQuiz(false)">Retake (same order)</button>
+    </div>
+    <div class="review-title" id="reviewTitle">— FULL ANSWER REVIEW —</div>
+    <div id="reviewList"></div>
+  </div>
+
+  <footer>
+    Source: Module 4 — Electronic Fundamentals CAT-B1.pdf (176 pages) · MCQ set + oral/recall set combined, duplicates kept · Fisher–Yates shuffle
+  </footer>
+</div>
+
+<script>
+/* ---------- Transistor symbol SVG (for the diagram-choice question) ---------- */
+function transistorSVG(topLab, midLab, botLab) {
+  return `<svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--text)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <line x1="45" y1="20" x2="45" y2="90"/>
+      <line x1="15" y1="55" x2="45" y2="55"/>
+      <line x1="45" y1="35" x2="85" y2="15"/>
+      <line x1="85" y1="15" x2="85" y2="3"/>
+      <line x1="45" y1="75" x2="85" y2="95"/>
+      <line x1="85" y1="95" x2="85" y2="107"/>
+      <polygon points="63,63 74,68 68,77" fill="var(--text)" stroke="none"/>
+    </g>
+    <text x="88" y="12" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${topLab}</text>
+    <text x="2" y="50" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${midLab}</text>
+    <text x="88" y="105" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--amber)">${botLab}</text>
+  </svg>`;
+}
+
+/* ---------- Question bank: 20 MCQ (set A) + 20 oral/recall (set B), duplicates kept ---------- */
+const BANK = [
+{
+  page: 9, type: "mcq",
+  en: { q: "Which statement about semiconductors is correct?",
+    options: [
+      "A pressure difference changes the resistance value of a semiconductor.",
+      "The energy state of a semiconductor lies between that of an insulator and that of a conductor.",
+      "A semiconductor is an excellent conductor with a low resistance value."
+    ],
+    explain: "A semiconductor's energy state sits between an insulator and a conductor — that's literally what makes it \"semi.\" Its resistance changes with temperature (a negative temperature coefficient), not pressure, and in pure (intrinsic) form it's actually a poor conductor, not an excellent one."
+  },
+  th: { q: "ข้อความใดเกี่ยวกับสารกึ่งตัวนำ (semiconductor) ถูกต้อง?",
+    options: [
+      "ความแตกต่างของความดันเปลี่ยนค่าความต้านทานของสารกึ่งตัวนำ",
+      "ระดับพลังงานของสารกึ่งตัวนำอยู่ระหว่างฉนวนและตัวนำ",
+      "สารกึ่งตัวนำเป็นตัวนำที่ดีเยี่ยมและมีความต้านทานต่ำ"
+    ],
+    explain: "ระดับพลังงานของสารกึ่งตัวนำอยู่กึ่งกลางระหว่างฉนวนกับตัวนำ นี่คือที่มาของคำว่า \"กึ่ง\" ความต้านทานของมันเปลี่ยนตามอุณหภูมิ (สัมประสิทธิ์อุณหภูมิเป็นลบ) ไม่ใช่ความดัน และในสภาพบริสุทธิ์ (intrinsic) มันเป็นตัวนำที่แย่ ไม่ใช่ตัวนำที่ดีเยี่ยม"
+  },
+  correctIndex: 1
+},
+{
+  page: 20, type: "mcq",
+  en: { q: "What is the voltage drop on a germanium diode?",
+    options: ["0.5 V", "0.3 V", "0.7 V"],
+    explain: "The manual states the forward switch-on voltage directly: Silicon = 0.7V, Germanium = 0.3V. Germanium's lower barrier potential is exactly why it was historically used where a smaller forward drop mattered."
+  },
+  th: { q: "แรงดันตกคร่อม (voltage drop) ของไดโอดเจอร์เมเนียม (germanium diode) เท่าใด?",
+    options: ["0.5 V", "0.3 V", "0.7 V"],
+    explain: "หนังสือระบุแรงดันเปิดนำกระแส (forward switch-on voltage) ไว้ชัดเจน: ซิลิคอน = 0.7V, เจอร์เมเนียม = 0.3V ค่า barrier potential ที่ต่ำกว่าของเจอร์เมเนียมคือเหตุผลที่เคยถูกใช้งานในจุดที่ต้องการแรงดันตกคร่อมต่ำ"
+  },
+  correctIndex: 1
+},
+{
+  page: 13, type: "mcq",
+  en: { q: "What material is used to dope n-type semiconductors?",
+    options: [
+      "Beryllium with 2 valence electrons",
+      "Boron with 3 valence electrons",
+      "Phosphorus with 5 valence electrons"
+    ],
+    explain: "Group 5 materials such as phosphorus (5 valence electrons) donate a spare \"donor\" electron once bonded into the crystal lattice, which is what creates the N-type semiconductor. Group 3 materials like boron (3 valence electrons) instead create an extra hole, which is used for P-type doping."
+  },
+  th: { q: "ใช้วัสดุใดในการโดป (dope) สารกึ่งตัวนำชนิด N (n-type)?",
+    options: [
+      "เบริลเลียม (Beryllium) ซึ่งมีอิเล็กตรอนวงนอก 2 ตัว",
+      "โบรอน (Boron) ซึ่งมีอิเล็กตรอนวงนอก 3 ตัว",
+      "ฟอสฟอรัส (Phosphorus) ซึ่งมีอิเล็กตรอนวงนอก 5 ตัว"
+    ],
+    explain: "ธาตุในกลุ่ม 5 อย่างฟอสฟอรัส (มีอิเล็กตรอนวงนอก 5 ตัว) จะให้อิเล็กตรอนส่วนเกิน (\"donor\" electron) เมื่อเข้าไปอยู่ในโครงผลึก ทำให้เกิดสารกึ่งตัวนำชนิด N ส่วนธาตุกลุ่ม 3 อย่างโบรอน (3 อิเล็กตรอนวงนอก) จะสร้างโฮลส่วนเกินแทน ซึ่งใช้สำหรับการโดปชนิด P"
+  },
+  correctIndex: 2
+},
+{
+  page: 13, type: "mcq",
+  en: { q: "What do you call the two types of semiconductors?",
+    options: [
+      "p-type and b-type semiconductors.",
+      "a-type and n-type semiconductors.",
+      "p-type and n-type semiconductors."
+    ],
+    explain: "Semiconductor doping produces two families: P-type (doped with a Group 3 acceptor material, majority carriers are holes) and N-type (doped with a Group 5 donor material, majority carriers are electrons)."
+  },
+  th: { q: "สารกึ่งตัวนำสองชนิดเรียกว่าอะไร?",
+    options: [
+      "สารกึ่งตัวนำชนิด p-type และ b-type",
+      "สารกึ่งตัวนำชนิด a-type และ n-type",
+      "สารกึ่งตัวนำชนิด p-type และ n-type"
+    ],
+    explain: "การโดปสารกึ่งตัวนำทำให้เกิดสองตระกูล: ชนิด P (โดปด้วยธาตุกลุ่ม 3 ที่เป็น acceptor พาหะส่วนใหญ่คือโฮล) และชนิด N (โดปด้วยธาตุกลุ่ม 5 ที่เป็น donor พาหะส่วนใหญ่คืออิเล็กตรอน)"
+  },
+  correctIndex: 2
+},
+{
+  page: 9, type: "mcq",
+  en: { q: "Which semiconductor materials are used to manufacture rectifier diodes?",
+    options: [
+      "Silicon and copper",
+      "Silicon and germanium",
+      "Germanium and copper"
+    ],
+    explain: "Silicon and germanium are the intrinsic semiconductor materials used for standard P-N (rectifier) diodes — copper is a plain conductor, not a semiconductor, so it's never a diode base material. (Gallium compounds are reserved for LEDs, precisely because silicon/germanium junctions release their energy as heat rather than light.)"
+  },
+  th: { q: "วัสดุสารกึ่งตัวนำใดใช้ผลิตไดโอดเรียงกระแส (rectifier diode)?",
+    options: [
+      "ซิลิคอนและทองแดง",
+      "ซิลิคอนและเจอร์เมเนียม",
+      "เจอร์เมเนียมและทองแดง"
+    ],
+    explain: "ซิลิคอนและเจอร์เมเนียมเป็นสารกึ่งตัวนำแบบ intrinsic ที่ใช้ทำไดโอด P-N (rectifier) มาตรฐาน ส่วนทองแดงเป็นเพียงตัวนำธรรมดา ไม่ใช่สารกึ่งตัวนำ จึงไม่เคยถูกใช้เป็นวัสดุฐานของไดโอด (สารประกอบแกลเลียมถูกสงวนไว้สำหรับ LED เพราะรอยต่อของซิลิคอน/เจอร์เมเนียมปล่อยพลังงานออกมาเป็นความร้อนแทนที่จะเป็นแสง)"
+  },
+  correctIndex: 1
+},
+{
+  page: 53, type: "mcq",
+  en: { q: "What is the base-emitter voltage to operate a silicon transistor?",
+    options: ["0.7 V", "0.3 V", "0.5 V"],
+    explain: "Just like a silicon diode's forward barrier, the Base-Emitter junction of a silicon transistor must be forward biased with at least 0.7V before it conducts and the transistor turns on."
+  },
+  th: { q: "แรงดันเบส-อิมิตเตอร์ (base-emitter voltage) ที่ใช้ในการทำงานของทรานซิสเตอร์ซิลิคอนคือเท่าใด?",
+    options: ["0.7 V", "0.3 V", "0.5 V"],
+    explain: "เช่นเดียวกับ forward barrier ของไดโอดซิลิคอน รอยต่อเบส-อิมิตเตอร์ (Base-Emitter junction) ของทรานซิสเตอร์ซิลิคอนต้องได้รับ forward bias อย่างน้อย 0.7V ก่อนจึงจะนำกระแสและทรานซิสเตอร์เปิดทำงาน"
+  },
+  correctIndex: 0
+},
+{
+  page: 56, type: "mcq",
+  en: { q: "Which picture shows the symbol of a PNP transistor?",
+    options: ["Picture C", "Picture B", "Picture A"],
+    explain: "On a transistor symbol, the arrow always sits on the Emitter leg. A PNP symbol has that arrow pointing inward, toward the Base (current flows conventionally into the device on that leg) — the opposite of an NPN symbol, whose arrow points outward. Picture C isn't a transistor at all; the + / − marks and triangular body identify it as an op-amp symbol."
+  },
+  th: { q: "ภาพใดแสดงสัญลักษณ์ของทรานซิสเตอร์ชนิด PNP?",
+    options: ["ภาพ C", "ภาพ B", "ภาพ A"],
+    explain: "บนสัญลักษณ์ทรานซิสเตอร์ ลูกศรจะอยู่ที่ขาอิมิตเตอร์เสมอ สัญลักษณ์ PNP จะมีลูกศรชี้เข้าหาเบส (กระแสไหลเข้าตามทิศทางทั่วไปที่ขานี้) ซึ่งตรงข้ามกับสัญลักษณ์ NPN ที่ลูกศรชี้ออก ส่วนภาพ C ไม่ใช่ทรานซิสเตอร์เลย เครื่องหมาย + / − และรูปทรงสามเหลี่ยมบ่งบอกว่าเป็นสัญลักษณ์ของออปแอมป์ (op-amp)"
+  },
+  correctIndex: 2
+},
+{
+  page: 56, type: "mcq",
+  en: { q: "What is the n-layer of a pnp transistor called?",
+    options: ["Emitter", "Base", "Collector"],
+    explain: "\"PNP\" names the three layers in order: P (Emitter) – N (Base) – P (Collector). The single N-type layer sandwiched between the two P-type layers is the Base."
+  },
+  th: { q: "ชั้น n-layer ของทรานซิสเตอร์ pnp เรียกว่าอะไร?",
+    options: ["อิมิตเตอร์ (Emitter)", "เบส (Base)", "คอลเลกเตอร์ (Collector)"],
+    explain: "คำว่า \"PNP\" บอกลำดับสามชั้นอยู่แล้ว: P (Emitter) – N (Base) – P (Collector) ชั้น N-type ชั้นเดียวที่แทรกอยู่ระหว่างชั้น P-type ทั้งสองคือเบส (Base)"
+  },
+  correctIndex: 1
+},
+{
+  page: 104, type: "mcq",
+  en: { q: "Where is the input signal applied at a non-inverting op amplifier?",
+    options: [
+      "At the inverting input",
+      "At the non inverting input.",
+      "It can be supplied at both inputs"
+    ],
+    explain: "The manual's own definition of the non-inverting amplifier configuration states it plainly: \"The input signal is applied to the non-inverting input (+).\" The inverting input in that configuration is only used to bring back the feedback fraction, not the source signal."
+  },
+  th: { q: "สัญญาณอินพุตของออปแอมป์แบบไม่กลับเฟส (non-inverting op amplifier) ถูกป้อนเข้าที่ใด?",
+    options: [
+      "ที่อินพุตกลับเฟส (inverting input)",
+      "ที่อินพุตไม่กลับเฟส (non-inverting input)",
+      "สามารถป้อนที่อินพุตทั้งสองขาได้"
+    ],
+    explain: "คำนิยามของวงจรขยายแบบไม่กลับเฟส (non-inverting amplifier) ในหนังสือระบุไว้ชัดเจนว่า \"สัญญาณอินพุตถูกป้อนเข้าที่ขาไม่กลับเฟส (+)\" ส่วนขาอินพุตกลับเฟสในวงจรนี้ใช้รับสัญญาณฟีดแบ็กที่ย้อนกลับมาเท่านั้น ไม่ใช่สัญญาณต้นทาง"
+  },
+  correctIndex: 1
+},
+{
+  page: 95, type: "mcq",
+  en: { q: "What types of circuits are in an operational amplifier?",
+    options: [
+      "Differential amplifier stages",
+      "Dual-flop amp stages",
+      "Digital processor stages"
+    ],
+    explain: "The manual states an Op-amp \"typically consists of two or more differential amplifier stages\" internally — these diff-amp stages are what give it high voltage gain and common-mode rejection. \"Dual-flop\" and \"digital processor\" stages aren't real op-amp building blocks."
+  },
+  th: { q: "ออปแอมป์ (operational amplifier) ประกอบด้วยวงจรชนิดใดภายใน?",
+    options: [
+      "วงจรขยายผลต่าง (differential amplifier) หลายสเตจ",
+      "วงจร Dual-flop amp stages",
+      "วงจรตัวประมวลผลดิจิทัล (digital processor stages)"
+    ],
+    explain: "หนังสือระบุว่าออปแอมป์ \"โดยทั่วไปประกอบด้วยวงจรขยายผลต่าง (differential amplifier) ตั้งแต่สองสเตจขึ้นไป\" ภายใน วงจร diff-amp เหล่านี้เองที่ทำให้ได้เกนแรงดันสูงและมีคุณสมบัติ common-mode rejection ส่วน \"Dual-flop\" และ \"digital processor\" ไม่ใช่องค์ประกอบจริงของออปแอมป์"
+  },
+  correctIndex: 0
+},
+{
+  page: 93, type: "mcq",
+  en: { q: "What is the output signal of an ideal op-amp without feedback, if the non-inverting input is grounded and a voltage of +2 V is supplied to the inverting input?",
+    options: ["+Vs", "0 Volt", "-Vs"],
+    explain: "With no feedback, the ideal op-amp's infinite open-loop gain amplifies even the tiniest input difference to its limit. Here the inverting (-) input is higher than the grounded non-inverting (+) input, so the output is driven hard negative — saturating at the negative supply rail, -Vs (the practical op-amp confirms output is \"limited to just below the two supply voltages\")."
+  },
+  th: { q: "สัญญาณเอาต์พุตของออปแอมป์อุดมคติ (ideal op-amp) ที่ไม่มีฟีดแบ็กเป็นอย่างไร หากอินพุตไม่กลับเฟสต่อกราวด์ และป้อนแรงดัน +2V เข้าที่อินพุตกลับเฟส?",
+    options: ["+Vs", "0 โวลต์", "-Vs"],
+    explain: "เมื่อไม่มีฟีดแบ็ก เกนวงเปิด (open-loop gain) ที่เป็นอนันต์ของออปแอมป์อุดมคติจะขยายผลต่างอินพุตแม้เพียงเล็กน้อยจนสุดขีด ในกรณีนี้อินพุตกลับเฟส (-) มีแรงดันสูงกว่าอินพุตไม่กลับเฟส (+) ที่ต่อกราวด์ไว้ เอาต์พุตจึงถูกผลักไปทางลบจนอิ่มตัวที่แรงดันไฟเลี้ยงด้านลบ -Vs (ในออปแอมป์จริงก็ยืนยันว่าเอาต์พุตจะถูกจำกัด \"ให้อยู่ต่ำกว่าแรงดันไฟเลี้ยงทั้งสองด้านเล็กน้อย\")"
+  },
+  correctIndex: 2
+},
+{
+  page: 93, type: "mcq",
+  en: { q: "What is the gain (amplification factor) of an ideal op-amp without a feedback signal?",
+    options: [
+      "The factor is smaller than one",
+      "The amp factor is always 100",
+      "The amp factor is infinite"
+    ],
+    explain: "The manual lists it as one of the ideal op-amp's three defining characteristics: \"infinite voltage gain, infinite bandwidth and infinite input impedance.\" Without feedback to tame it, the open-loop gain is treated as infinite."
+  },
+  th: { q: "เกน (อัตราขยาย) ของออปแอมป์อุดมคติที่ไม่มีสัญญาณฟีดแบ็กเป็นเท่าใด?",
+    options: [
+      "อัตราขยายน้อยกว่าหนึ่ง",
+      "อัตราขยายเท่ากับ 100 เสมอ",
+      "อัตราขยายเป็นอนันต์"
+    ],
+    explain: "หนังสือระบุไว้เป็นหนึ่งในสามคุณสมบัติหลักของออปแอมป์อุดมคติ: \"เกนแรงดันเป็นอนันต์ แบนด์วิดท์เป็นอนันต์ และอิมพีแดนซ์อินพุตเป็นอนันต์\" เมื่อไม่มีฟีดแบ็กมาควบคุม เกนวงเปิด (open-loop gain) จึงถือว่าเป็นอนันต์"
+  },
+  correctIndex: 2
+},
+{
+  page: 93, type: "mcq",
+  en: { q: "What is required to operate an operational amplifier?",
+    options: [
+      "Two different input signals",
+      "A DC supply voltage",
+      "Ground on one of the inputs"
+    ],
+    explain: "The manual states it directly: \"the typical Op-amp requires two DC supply voltages. One is positive, and the other is negative.\" A working input signal or a grounded input isn't a requirement — an op-amp needs power before it can do anything with its inputs."
+  },
+  th: { q: "การทำงานของออปแอมป์ต้องการสิ่งใด?",
+    options: [
+      "สัญญาณอินพุตสองสัญญาณที่แตกต่างกัน",
+      "แรงดันไฟเลี้ยงกระแสตรง (DC supply voltage)",
+      "การต่อกราวด์ที่อินพุตขาใดขาหนึ่ง"
+    ],
+    explain: "หนังสือระบุตรง ๆ ว่า \"ออปแอมป์ทั่วไปต้องการแรงดันไฟเลี้ยงกระแสตรงสองค่า ค่าหนึ่งเป็นบวก อีกค่าเป็นลบ\" สัญญาณอินพุตหรือการต่อกราวด์ที่ขาใดขาหนึ่งไม่ใช่สิ่งจำเป็น เพราะออปแอมป์ต้องมีไฟเลี้ยงก่อนจึงจะประมวลผลอินพุตได้"
+  },
+  correctIndex: 1
+},
+{
+  page: 121, type: "mcq",
+  en: { q: "Which statement about a raster board is true?",
+    options: [
+      "The raster board has no copper coating.",
+      "The raster board has copper stripes.",
+      "The raster board has a copper coating around each hole."
+    ],
+    explain: "The manual is explicit: raster boards \"consist of hard paper without copper coating\" — just a perforated board where components are wired point-to-point with leads or wire on the back. (Copper stripes describe a Veroboard, and copper around each hole describes a Tag Raster Board.)"
+  },
+  th: { q: "ข้อความใดเกี่ยวกับบอร์ดราสเตอร์ (raster board) ถูกต้อง?",
+    options: [
+      "บอร์ดราสเตอร์ไม่มีการเคลือบทองแดง",
+      "บอร์ดราสเตอร์มีแถบทองแดง",
+      "บอร์ดราสเตอร์มีการเคลือบทองแดงรอบรูแต่ละรู"
+    ],
+    explain: "หนังสือระบุชัดเจนว่าบอร์ดราสเตอร์ \"ทำจากกระดาษแข็งโดยไม่มีการเคลือบทองแดง\" เป็นเพียงบอร์ดเจาะรูที่ต่อวงจรแบบจุดต่อจุดด้วยขาอุปกรณ์หรือสายไฟด้านหลัง (แถบทองแดงคือลักษณะของ Veroboard ส่วนทองแดงรอบรูคือลักษณะของ Tag Raster Board)"
+  },
+  correctIndex: 0
+},
+{
+  page: 124, type: "mcq",
+  en: { q: "What is the PCB?",
+    options: [
+      "A soldering stripe board.",
+      "A Vero board",
+      "A printed circuit board."
+    ],
+    explain: "PCB is simply the abbreviation used throughout the manual's Circuit Boards chapter for \"printed circuit board\" — a distinct board type from soldering strips, raster boards, and veroboards."
+  },
+  th: { q: "PCB คืออะไร?",
+    options: [
+      "แผ่นแถบบัดกรี (soldering stripe board)",
+      "บอร์ด Vero",
+      "แผ่นวงจรพิมพ์ (printed circuit board)"
+    ],
+    explain: "PCB เป็นเพียงคำย่อที่ใช้ตลอดทั้งบทเรื่องแผ่นวงจร (Circuit Boards) ของหนังสือ หมายถึง \"printed circuit board\" หรือแผ่นวงจรพิมพ์ ซึ่งเป็นบอร์ดคนละประเภทกับแผ่นแถบบัดกรี บอร์ดราสเตอร์ และ veroboard"
+  },
+  correctIndex: 2
+},
+{
+  page: 123, type: "mcq",
+  en: { q: "What is the conductive material of a Vero board made of?",
+    options: ["Gold", "Copper", "Silicon"],
+    explain: "The manual states Veroboards are \"coated with straight copper conductor tracks arranged in parallel\" on one side of the hard-paper base — that's the defining feature that distinguishes it from a plain (uncoated) raster board."
+  },
+  th: { q: "วัสดุตัวนำของบอร์ด Vero ทำจากอะไร?",
+    options: ["ทองคำ", "ทองแดง", "ซิลิคอน"],
+    explain: "หนังสือระบุว่า Veroboard \"เคลือบด้วยแถบตัวนำทองแดงเรียงขนานกัน\" บนด้านหนึ่งของฐานกระดาษแข็ง นี่คือคุณสมบัติเด่นที่ทำให้ต่างจากบอร์ดราสเตอร์ธรรมดา (ที่ไม่มีการเคลือบ)"
+  },
+  correctIndex: 1
+},
+{
+  page: 127, type: "mcq",
+  en: { q: "What is the special advantage of a printed circuit board?",
+    options: [
+      "Compact arrangement of electronic components.",
+      "A test set up can be built in a very short time.",
+      "The routing of circuits is easy to change."
+    ],
+    explain: "The manual frames PCBs as the answer to the need for products that are \"small and of good quality\" at low cost — in combination with semiconductors, PCBs let circuits be realized in very small sizes. Fast test set-ups and easy rerouting are actually advantages of raster/veroboards, the opposite trade-off."
+  },
+  th: { q: "ข้อได้เปรียบพิเศษของแผ่นวงจรพิมพ์ (printed circuit board) คืออะไร?",
+    options: [
+      "การจัดวางอุปกรณ์อิเล็กทรอนิกส์แบบกะทัดรัด",
+      "สามารถสร้างชุดทดสอบได้ในเวลาอันสั้นมาก",
+      "การเดินวงจรสามารถเปลี่ยนแปลงได้ง่าย"
+    ],
+    explain: "หนังสือกล่าวถึง PCB ว่าเป็นคำตอบของความต้องการผลิตภัณฑ์ที่ \"มีขนาดเล็กและมีคุณภาพดี\" ในต้นทุนต่ำ เมื่อรวมกับสารกึ่งตัวนำแล้ว PCB ทำให้สร้างวงจรที่มีขนาดเล็กมากได้ ส่วนการสร้างชุดทดสอบได้เร็วและการเปลี่ยนวงจรได้ง่ายกลับเป็นข้อได้เปรียบของบอร์ดราสเตอร์/veroboard ซึ่งเป็นข้อแลกเปลี่ยนตรงข้ามกัน"
+  },
+  correctIndex: 0
+},
+{
+  page: 156, type: "mcq",
+  en: { q: "By how many degrees is the phase shift of the stator windings of a torque synchronisation system?",
+    options: ["180°", "90°", "120°"],
+    explain: "The manual describes the Torque Synchro's stator construction directly: three sets of windings, S1, S2 and S3, \"spaced 120° apart\" around the internally slotted laminations."
+  },
+  th: { q: "การเลื่อนเฟส (phase shift) ของขดลวดสเตเตอร์ (stator windings) ในระบบทอร์กซินโคร (torque synchronisation) ห่างกันกี่องศา?",
+    options: ["180°", "90°", "120°"],
+    explain: "หนังสืออธิบายโครงสร้างสเตเตอร์ของ Torque Synchro ไว้ตรง ๆ ว่ามีขดลวดสามชุดคือ S1, S2 และ S3 ซึ่ง \"วางห่างกัน 120°\" รอบแผ่นลามิเนตที่มีร่องด้านใน"
+  },
+  correctIndex: 2
+},
+{
+  page: 173, type: "mcq",
+  en: { q: "What is the output voltage of the LVDT in the shown picture?",
+    options: [
+      "The output voltage is 0 volt, if the iron core is in the center position, like shown.",
+      "The output voltage is 90 degree phase shifted according the input voltage.",
+      "The output voltage is 180 degree phase shifted according the input voltage."
+    ],
+    explain: "The manual states it for exactly this centered-core case: with the movable iron core in the middle between N2 and N3, it induces two equal but opposite-phase voltages in the secondaries, which cancel out — giving output voltage U2 = 0V. Phase-shift outputs (in-phase or 180° out of phase) only appear once the core moves off-center."
+  },
+  th: { q: "แรงดันเอาต์พุตของ LVDT ในภาพที่แสดงคือเท่าใด?",
+    options: [
+      "แรงดันเอาต์พุตเท่ากับ 0 โวลต์ หากแกนเหล็กเคลื่อนที่ (movable iron core) อยู่ตำแหน่งกึ่งกลางดังภาพ",
+      "แรงดันเอาต์พุตเลื่อนเฟส 90 องศาเทียบกับแรงดันอินพุต",
+      "แรงดันเอาต์พุตเลื่อนเฟส 180 องศาเทียบกับแรงดันอินพุต"
+    ],
+    explain: "หนังสือระบุไว้ตรงกับกรณีแกนอยู่กึ่งกลางนี้พอดี: เมื่อแกนเหล็กเคลื่อนที่อยู่กึ่งกลางระหว่าง N2 และ N3 จะเหนี่ยวนำแรงดันสองค่าที่เท่ากันแต่เฟสตรงข้ามกันในขดลวดทุติยภูมิ ซึ่งหักล้างกันพอดี ทำให้แรงดันเอาต์พุต U2 = 0V ส่วนเอาต์พุตแบบเลื่อนเฟส (in-phase หรือ 180 องศา) จะเกิดขึ้นก็ต่อเมื่อแกนเคลื่อนออกจากตำแหน่งกึ่งกลางแล้วเท่านั้น"
+  },
+  correctIndex: 0
+},
+{
+  page: 166, type: "mcq",
+  en: { q: "What is the code of a control transformer?",
+    options: ["TX", "CT", "C"],
+    explain: "The manual's standard synchro code table lists it directly: \"CT — Control Transformer.\" (TX is a Torque Transmitter, and a bare \"C\" is only the first-letter class marker for the whole Control family, not a complete code.)"
+  },
+  th: { q: "รหัสของคอนโทรลทรานส์ฟอร์เมอร์ (control transformer) คืออะไร?",
+    options: ["TX", "CT", "C"],
+    explain: "ตารางรหัสซินโครมาตรฐานในหนังสือระบุไว้ตรงตัวว่า \"CT — Control Transformer\" (ส่วน TX คือ Torque Transmitter และตัวอักษร \"C\" เดี่ยว ๆ เป็นเพียงตัวอักษรแรกที่บ่งบอกกลุ่ม Control เท่านั้น ไม่ใช่รหัสที่สมบูรณ์)"
+  },
+  correctIndex: 1
+},
+{ page: 20, type: "recall",
+  en: { q: "What is the voltage drop across a germanium diode?",
+    a: "0.3 V",
+    explain: "The manual states the forward switch-on voltage directly: Germanium = 0.3V (Silicon = 0.7V, for comparison)." },
+  th: { q: "แรงดันตกคร่อม (voltage drop) ของไดโอดเจอร์เมเนียมเท่าใด?",
+    a: "0.3 โวลต์",
+    explain: "หนังสือระบุแรงดันเปิดนำกระแสไว้ชัดเจน: เจอร์เมเนียม = 0.3V (เทียบกับซิลิคอน = 0.7V)" }
+},
+{ page: 28, type: "recall",
+  en: { q: "In which direction or directions should a diode be tested for proper functionality?",
+    a: "Both directions — forward bias AND reverse bias.",
+    explain: "A functional diode shows very low resistance in forward bias (roughly 0.6–0.9V drop on a DMM diode-test range) and very high resistance — near open circuit — in reverse bias. Testing only one direction can't distinguish a good diode from one that's shorted or open, so both readings are needed." },
+  th: { q: "ควรทดสอบไดโอดในทิศทางใดหรือหลายทิศทางเพื่อตรวจสอบว่าทำงานปกติ?",
+    a: "ทั้งสองทิศทาง — ทั้ง forward bias และ reverse bias",
+    explain: "ไดโอดที่ทำงานปกติจะมีความต้านทานต่ำมากเมื่อ forward bias (แรงดันตกคร่อมประมาณ 0.6–0.9V บนโหมดทดสอบไดโอดของ DMM) และมีความต้านทานสูงมาก (เกือบเป็นวงจรเปิด) เมื่อ reverse bias การทดสอบเพียงทิศทางเดียวไม่สามารถแยกแยะไดโอดที่ดีออกจากไดโอดที่ช็อตหรือขาดได้ จึงต้องอ่านค่าทั้งสองทิศทาง" }
+},
+{ page: 15, type: "recall",
+  en: { q: "To create a silicon p-type conductor, which material is used for doping the silicon?",
+    a: "A Group 3 element — Boron (Indium and Aluminum also work).",
+    explain: "The manual lists \"Indium, Aluminum and Boron\" as Group 3 materials used for P-type doping — Boron is the one most commonly cited. Group 3 elements have only 3 valence electrons, so bonding into the silicon lattice leaves an extra hole (an \"acceptor\"), which is what makes the material P-type." },
+  th: { q: "การสร้างสารกึ่งตัวนำซิลิคอนชนิด P (p-type) ใช้วัสดุใดในการโดป (dope) ซิลิคอน?",
+    a: "ธาตุในกลุ่ม 3 — โบรอน (Boron) (อินเดียมและอะลูมิเนียมก็ใช้ได้เช่นกัน)",
+    explain: "หนังสือระบุว่า \"อินเดียม อะลูมิเนียม และโบรอน\" เป็นธาตุกลุ่ม 3 ที่ใช้โดปชนิด P โดยโบรอนเป็นตัวที่ถูกอ้างถึงบ่อยที่สุด ธาตุกลุ่ม 3 มีอิเล็กตรอนวงนอกเพียง 3 ตัว เมื่อสร้างพันธะในโครงผลึกซิลิคอนจึงเหลือโฮลส่วนเกิน (เรียกว่า \"acceptor\") ซึ่งทำให้วัสดุกลายเป็นชนิด P" }
+},
+{ page: 28, type: "recall",
+  en: { q: "What does the display on a digital multimeter show when testing a silicon rectifier diode in the reverse direction?",
+    a: "A high reading close to the DMM's diode-test supply limit (e.g. ~2.5V), or 'OL' (overload / open-circuit).",
+    explain: "The manual gives this exact example: testing a good diode in reverse bias, the DMM may read around 2.5V (the illustrative value used in the book) or display 'OL' — both indicate a very high resistance path, since only a negligible reverse leakage current is flowing. A commonly circulated separate answer key for this question lists 'OL' only — that's incomplete, since the book confirms both readings are normal." },
+  th: { q: "หน้าจอมัลติมิเตอร์ดิจิทัล (DMM) แสดงผลอย่างไรเมื่อทดสอบไดโอดเรียงกระแสซิลิคอนในทิศทาง reverse?",
+    a: "ค่าที่อ่านได้จะสูงใกล้เคียงแรงดันทดสอบสูงสุดของ DMM (เช่น ~2.5V) หรือขึ้น 'OL' (overload / วงจรเปิด)",
+    explain: "หนังสือยกตัวอย่างไว้ตรงนี้เลย: เมื่อทดสอบไดโอดที่ดีในทิศทาง reverse bias มิเตอร์อาจอ่านได้ประมาณ 2.5V (ค่าตัวอย่างที่ใช้ในหนังสือ) หรือขึ้น 'OL' ทั้งสองแบบบ่งบอกถึงเส้นทางความต้านทานที่สูงมาก เนื่องจากมีเพียงกระแสรั่วไหลเพียงเล็กน้อยเท่านั้นที่ไหลผ่าน เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบเพียง 'OL' อย่างเดียว ซึ่งไม่ครบ เพราะหนังสือยืนยันว่าทั้งสองแบบถือว่าปกติ" }
+},
+{ page: "20–21", type: "recall",
+  en: { q: "What is the voltage drop at a series connection of 4 germanium diodes?",
+    a: "1.2 V (4 × 0.3V).",
+    explain: "Diodes in series each carry the same current, and the total forward drop is the sum of each diode's own drop. With germanium's 0.3V forward voltage, four in series drop 4 × 0.3V = 1.2V, leaving the rest of the supply across the load (Kirchhoff's voltage law)." },
+  th: { q: "แรงดันตกคร่อมของไดโอดเจอร์เมเนียม 4 ตัวต่ออนุกรมกันเท่าใด?",
+    a: "1.2 โวลต์ (4 × 0.3V)",
+    explain: "ไดโอดที่ต่ออนุกรมกันจะมีกระแสไหลผ่านเท่ากันทุกตัว และแรงดันตกคร่อมรวมคือผลรวมของแรงดันตกคร่อมของแต่ละตัว เมื่อแรงดัน forward ของเจอร์เมเนียมคือ 0.3V ไดโอด 4 ตัวต่ออนุกรมจะตกคร่อมรวม 4 × 0.3V = 1.2V ส่วนที่เหลือของแรงดันไฟเลี้ยงจะตกคร่อมที่โหลด (ตามกฎแรงดันของ Kirchhoff)" }
+},
+{ page: 20, type: "recall",
+  en: { q: "Which statement is correct when a P-N junction is biased in reverse?",
+    a: "The depletion region widens, and only a negligible leakage current (from minority carriers) flows.",
+    explain: "The manual states it directly: \"During reverse bias operation, the electrons and holes move away from the junction as the depletion region increases. A negligible current is permitted to flow due to leakage from minority carriers (usually no more than 100μA).\"" },
+  th: { q: "ข้อความใดถูกต้องเมื่อรอยต่อ P-N (P-N junction) ถูกไบแอสในทิศทาง reverse?",
+    a: "บริเวณ depletion region ขยายกว้างขึ้น และมีเพียงกระแสรั่วไหลจากพาหะส่วนน้อยเท่านั้นที่ไหลผ่าน (น้อยมาก)",
+    explain: "หนังสือระบุไว้ตรง ๆ ว่า \"เมื่อทำงานในโหมด reverse bias อิเล็กตรอนและโฮลจะเคลื่อนที่ออกห่างจากรอยต่อ ทำให้ depletion region ขยายกว้างขึ้น มีกระแสไหลได้เพียงเล็กน้อยมาก (โดยทั่วไปไม่เกิน 100μA) จากการรั่วไหลของพาหะส่วนน้อย (minority carriers)\"" }
+},
+{ page: 49, type: "recall",
+  en: { q: "What is the voltage drop at a series connection of 3 silicon diodes?",
+    a: "2.1 V (3 × 0.7V).",
+    explain: "This is a worked example straight from the manual: \"The voltage drop across a single diode is 0.7V. The voltage drop across all 3 diodes is 2.1V (0.7V×3).\"" },
+  th: { q: "แรงดันตกคร่อมของไดโอดซิลิคอน 3 ตัวต่ออนุกรมกันเท่าใด?",
+    a: "2.1 โวลต์ (3 × 0.7V)",
+    explain: "นี่คือตัวอย่างการคำนวณจากหนังสือโดยตรง: \"แรงดันตกคร่อมของไดโอดตัวเดียวคือ 0.7V แรงดันตกคร่อมของไดโอดทั้ง 3 ตัวคือ 2.1V (0.7V×3)\"" }
+},
+{ page: 46, type: "recall",
+  en: { q: "What are the three leads of a TRIAC called?",
+    a: "A1, A2 and G (Anode 1, Anode 2, and Gate).",
+    explain: "The manual's own Triac circuit symbol (Figure 42) labels the three leads exactly this way: A1 at the top, A2 at the bottom, and G (Gate) coming off the side — the two Anode leads carry the bi-directional load current, while the Gate triggers conduction. A commonly circulated separate answer key for this question uses \"MT1, MT2\" instead — that's standard terminology elsewhere, but not what this book's own figure labels." },
+  th: { q: "ขาทั้งสามของ TRIAC เรียกว่าอะไร?",
+    a: "A1, A2 และ G (Anode 1, Anode 2 และ Gate)",
+    explain: "สัญลักษณ์วงจร Triac ในหนังสือ (Figure 42) ระบุขาทั้งสามไว้ตรงนี้เลย: A1 อยู่ด้านบน, A2 อยู่ด้านล่าง และ G (Gate) ยื่นออกด้านข้าง ขา Anode ทั้งสองนำกระแสโหลดแบบสองทิศทาง ส่วนขา Gate ใช้กระตุ้นให้เริ่มนำกระแส เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปใช้คำว่า \"MT1, MT2\" แทน ซึ่งเป็นศัพท์มาตรฐานในตำราเล่มอื่น แต่ไม่ตรงกับที่หนังสือเล่มนี้ระบุไว้เอง" }
+},
+{ page: 76, type: "recall",
+  en: { q: "What else is a bipolar transistor called?",
+    a: "BJT — Bipolar Junction Transistor.",
+    explain: "The manual uses this abbreviation directly when introducing coupled amplifiers: \"The Common-Emitter (CE) configuration is a Bi-polar junction transistor (BJT) arrangement...\"" },
+  th: { q: "ทรานซิสเตอร์ชนิดไบโพลาร์ (bipolar transistor) มีชื่อเรียกอื่นว่าอะไร?",
+    a: "BJT — Bipolar Junction Transistor",
+    explain: "หนังสือใช้คำย่อนี้โดยตรงตอนแนะนำวงจรขยายแบบต่อพ่วง: \"วงจร Common-Emitter (CE) คือการจัดวงจรแบบ Bi-polar junction transistor (BJT)...\"" }
+},
+{ page: 53, type: "recall",
+  en: { q: "What is the base-emitter voltage to operate a silicon transistor?",
+    a: "0.7 V",
+    explain: "Just like a silicon diode's forward barrier, the Base-Emitter junction of a silicon transistor must be forward biased with at least 0.7V before the transistor conducts." },
+  th: { q: "แรงดันเบส-อิมิตเตอร์ที่ใช้ในการทำงานของทรานซิสเตอร์ซิลิคอนคือเท่าใด?",
+    a: "0.7 โวลต์",
+    explain: "เช่นเดียวกับ forward barrier ของไดโอดซิลิคอน รอยต่อเบส-อิมิตเตอร์ของทรานซิสเตอร์ซิลิคอนต้องได้รับ forward bias อย่างน้อย 0.7V ก่อนทรานซิสเตอร์จึงจะนำกระแส" }
+},
+{ page: 53, type: "recall",
+  en: { q: "What are the three leads of a bipolar transistor called?",
+    a: "Base, Emitter and Collector.",
+    explain: "The manual's NPN Transistor Construction figure labels all three: the base (the thin, lightly-doped middle layer), the emitter (which supplies the majority carriers), and the collector (which collects them)." },
+  th: { q: "ขาทั้งสามของทรานซิสเตอร์ไบโพลาร์เรียกว่าอะไร?",
+    a: "เบส (Base), อิมิตเตอร์ (Emitter) และคอลเลกเตอร์ (Collector)",
+    explain: "แผนภาพโครงสร้างทรานซิสเตอร์ NPN ในหนังสือระบุขาทั้งสามไว้ชัดเจน: เบส (ชั้นกลางที่บางและโดปเบา), อิมิตเตอร์ (ที่ป้อนพาหะส่วนใหญ่) และคอลเลกเตอร์ (ที่รับพาหะเหล่านั้น)" }
+},
+{ page: 53, type: "choice",
+  choices: [
+    { top: "C", mid: "B", bot: "E" },
+    { top: "B", mid: "C", bot: "E" },
+    { top: "E", mid: "B", bot: "C" }
+  ],
+  correctIndex: 0,
+  en: { q: "In which picture are the leads of the transistor correctly labeled?",
+    explain: "The book's own transistor construction diagram (Figure 45) fixes the layout: the horizontal lead into the base bar is always the Base, the top diagonal lead is the Collector, and the bottom diagonal lead (the one with the arrow) is the Emitter. Only Picture A follows that layout — Picture B swaps Base and Collector, and Picture C swaps Collector and Emitter." },
+  th: { q: "ภาพใดที่มีการติดฉลากขาทรานซิสเตอร์ถูกต้อง?",
+    explain: "แผนภาพโครงสร้างทรานซิสเตอร์ในหนังสือ (Figure 45) กำหนดผังไว้ตายตัว: ขาที่ต่อในแนวนอนเข้ากับแท่งเบสคือเบสเสมอ ขาทแยงด้านบนคือคอลเลกเตอร์ และขาทแยงด้านล่าง (ที่มีลูกศร) คืออิมิตเตอร์ มีเพียงภาพ A เท่านั้นที่ตรงตามผังนี้ — ภาพ B สลับเบสกับคอลเลกเตอร์ ส่วนภาพ C สลับคอลเลกเตอร์กับอิมิตเตอร์" }
+},
+{ page: 93, type: "recall",
+  en: { q: "What connections does an operational amplifier have?",
+    a: "Two inputs (inverting − and non-inverting +), one output, and two DC supply pins (+V and −V).",
+    explain: "The manual states: \"The standard Op-amp has two input terminals, the inverting input (labelled '-') and the non-inverting input (+). It also has one output terminal,\" plus \"the typical Op-amp requires two DC supply voltages. One is positive, and the other is negative.\" A commonly circulated separate answer key for this question stops at \"two inputs and one output\" — missing the two supply pins the book itself adds." },
+  th: { q: "ออปแอมป์ (operational amplifier) มีขาต่อ (connections) อะไรบ้าง?",
+    a: "อินพุตสองขา (กลับเฟส − และไม่กลับเฟส +), เอาต์พุตหนึ่งขา และขาไฟเลี้ยงกระแสตรงสองขา (+V และ −V)",
+    explain: "หนังสือระบุว่า \"ออปแอมป์มาตรฐานมีขาอินพุตสองขา คือขากลับเฟส (มีเครื่องหมาย '-') และขาไม่กลับเฟส (+) และมีขาเอาต์พุตหนึ่งขา\" พร้อมทั้งระบุว่า \"ออปแอมป์ทั่วไปต้องการแรงดันไฟเลี้ยงกระแสตรงสองค่า ค่าหนึ่งเป็นบวก อีกค่าเป็นลบ\" เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบแค่ \"อินพุตสองขาและเอาต์พุตหนึ่งขา\" เท่านั้น ขาดขาไฟเลี้ยงสองขาที่หนังสือระบุเพิ่มไว้" }
+},
+{ page: 106, type: "recall",
+  en: { q: "Where is the input signal applied at an inverting op amplifier?",
+    a: "Through a series input resistor into the inverting (−) input; the non-inverting (+) input is grounded.",
+    explain: "The manual describes the inverting amplifier configuration directly: \"The input signal is applied through a series input resistor (Ri) to the inverting input (-)... The non-inverting input (+) is grounded.\"" },
+  th: { q: "สัญญาณอินพุตของออปแอมป์แบบกลับเฟส (inverting op amplifier) ถูกป้อนเข้าที่ใด?",
+    a: "ผ่านตัวต้านทานอินพุตแบบอนุกรมเข้าไปที่ขากลับเฟส (−) ส่วนขาไม่กลับเฟส (+) ต่อลงกราวด์",
+    explain: "หนังสืออธิบายวงจรขยายแบบกลับเฟสไว้ตรง ๆ ว่า \"สัญญาณอินพุตถูกป้อนผ่านตัวต้านทานอินพุตแบบอนุกรม (Ri) เข้าไปที่ขากลับเฟส (-)... ส่วนขาไม่กลับเฟส (+) ต่อลงกราวด์\"" }
+},
+{ page: "93–94", type: "recall",
+  en: { q: "What is the output signal of an ideal op-amp without feedback, if the non-inverting input is grounded and a voltage of +2 V is supplied to the inverting input?",
+    a: "-Vs — the output saturates at the negative supply rail.",
+    explain: "With no feedback, the ideal op-amp's infinite open-loop gain amplifies even the tiniest input difference to its limit. Here the inverting (-) input is higher than the grounded non-inverting (+) input, so the output is driven hard negative — saturating at -Vs (the practical op-amp confirms output is \"limited to just below the two supply voltages\")." },
+  th: { q: "สัญญาณเอาต์พุตของออปแอมป์อุดมคติที่ไม่มีฟีดแบ็กเป็นอย่างไร หากอินพุตไม่กลับเฟสต่อกราวด์ และป้อนแรงดัน +2V เข้าที่อินพุตกลับเฟส?",
+    a: "-Vs — เอาต์พุตอิ่มตัวที่แรงดันไฟเลี้ยงด้านลบ",
+    explain: "เมื่อไม่มีฟีดแบ็ก เกนวงเปิดที่เป็นอนันต์ของออปแอมป์อุดมคติจะขยายผลต่างอินพุตแม้เพียงเล็กน้อยจนสุดขีด อินพุตกลับเฟส (-) มีแรงดันสูงกว่าอินพุตไม่กลับเฟส (+) ที่ต่อกราวด์ไว้ เอาต์พุตจึงถูกผลักไปทางลบจนอิ่มตัวที่ -Vs (ออปแอมป์จริงยืนยันว่าเอาต์พุตถูกจำกัด \"ให้อยู่ต่ำกว่าแรงดันไฟเลี้ยงทั้งสองด้านเล็กน้อย\")" }
+},
+{ page: 121, type: "recall",
+  en: { q: "Which statement about a raster board is true?",
+    a: "It has no copper coating — it's plain perforated hard paper.",
+    explain: "The manual is explicit: raster boards \"consist of hard paper without copper coating\" — just a perforated board where components are wired point-to-point with leads or wire on the back. Watch out: a commonly circulated separate answer key for this question states the opposite — that raster boards have copper around each hole. That description actually belongs to the tag raster board, a different type (see the next question)." },
+  th: { q: "ข้อความใดเกี่ยวกับบอร์ดราสเตอร์ (raster board) ถูกต้อง?",
+    a: "ไม่มีการเคลือบทองแดง — เป็นกระดาษแข็งเจาะรูธรรมดา",
+    explain: "หนังสือระบุชัดเจนว่าบอร์ดราสเตอร์ \"ทำจากกระดาษแข็งโดยไม่มีการเคลือบทองแดง\" เป็นเพียงบอร์ดเจาะรูที่ต่อวงจรแบบจุดต่อจุดด้วยขาอุปกรณ์หรือสายไฟด้านหลัง ข้อควรระวัง: เฉลยอีกชุดหนึ่งที่หมุนเวียนอยู่ทั่วไปตอบตรงข้ามกัน คือบอกว่าบอร์ดราสเตอร์มีทองแดงรอบรู ซึ่งจริงๆ แล้วเป็นคำอธิบายของ tag raster board ที่เป็นคนละชนิด (ดูคำถามข้อถัดไป)" }
+},
+{ page: 122, type: "recall",
+  en: { q: "What is the thickness of the copper coating of a tag raster board?",
+    a: "35 μm.",
+    explain: "The manual states it directly: \"Raster boards with copper coating around each hole (tag) are designated 'tag raster boards.' The copper coating has a thickness of 35 μm.\"" },
+  th: { q: "ความหนาของการเคลือบทองแดงของบอร์ด tag raster เท่าใด?",
+    a: "35 ไมโครเมตร (μm)",
+    explain: "หนังสือระบุไว้ตรง ๆ ว่า \"บอร์ดราสเตอร์ที่มีการเคลือบทองแดงรอบแต่ละรู (tag) เรียกว่า 'tag raster board' การเคลือบทองแดงมีความหนา 35 μm\"" }
+},
+{ page: "136–137", type: "recall",
+  en: { q: "What is the difference between an open-loop and a closed-loop control system?",
+    a: "An open-loop system has no feedback and can't compare its output to the demand, so it drifts with load, temperature and supply variations. A closed-loop system feeds the output back and compares it to the input to generate an error signal that continuously corrects the output.",
+    explain: "The manual states open-loop systems \"suffer from the major disadvantage that... factors do not remain constant\" (gain, friction, supply variation all cause drift with no correction), while a closed-loop system must be capable of \"determining the present conditions by some method of feedback\" and \"comparing the desired result with the present conditions\" to correct any error — this is exactly why the manual calls a closed-loop control system \"another name for a servo system.\"" },
+  th: { q: "ความแตกต่างระหว่างระบบควบคุมแบบวงเปิด (open-loop) และวงปิด (closed-loop) คืออะไร?",
+    a: "ระบบวงเปิดไม่มีฟีดแบ็ก จึงเปรียบเทียบเอาต์พุตกับค่าที่ต้องการไม่ได้ ผลลัพธ์จึงคลาดเคลื่อนไปตามโหลด อุณหภูมิ และแรงดันไฟเลี้ยงที่เปลี่ยนไป ส่วนระบบวงปิดจะป้อนเอาต์พุตย้อนกลับมาเปรียบเทียบกับอินพุตเพื่อสร้างสัญญาณผิดพลาดที่คอยแก้ไขเอาต์พุตอย่างต่อเนื่อง",
+    explain: "หนังสือระบุว่าระบบวงเปิด \"มีข้อเสียหลักคือปัจจัยต่าง ๆ (เช่นเกน แรงเสียดทาน ความผันแปรของไฟเลี้ยง) ไม่คงที่\" ทำให้ผลลัพธ์คลาดเคลื่อนโดยไม่มีการแก้ไข ในขณะที่ระบบวงปิดต้องสามารถ \"ตรวจสอบสภาวะปัจจุบันด้วยวิธีฟีดแบ็ก\" และ \"เปรียบเทียบผลลัพธ์ที่ต้องการกับสภาวะปัจจุบัน\" เพื่อแก้ไขความผิดพลาด นี่คือเหตุผลที่หนังสือเรียกระบบวงปิดว่า \"เป็นอีกชื่อหนึ่งของระบบเซอร์โว (servo system)\"" }
+},
+{ page: "155–156", type: "recall",
+  en: { q: "Which description of a torque transmitter synchro is correct?",
+    a: "Its rotor is excited by a single-phase AC supply; by transformer action this induces voltages into the three Y-connected stator windings (S1, S2, S3 — spaced 120° apart), and the relative magnitude of those voltages corresponds to the rotor's angular position, transmitting the shaft angle electrically.",
+    explain: "The manual explains the synchro transmission principle directly: \"either the primary or secondary windings are wound on the rotor... The amplitude of voltage induced into the secondary depends upon the relative angular position of the primary/secondary windings,\" and for the torque synchro specifically, the stator carries \"three sets of windings S1, S2 and S3 spaced 120° apart\" whose induced voltages are NOT equal in magnitude — that imbalance is what encodes the rotor's angle." },
+  th: { q: "คำอธิบายใดเกี่ยวกับทอร์กทรานสมิตเตอร์ซินโคร (torque transmitter synchro) ถูกต้อง?",
+    a: "โรเตอร์ถูกกระตุ้นด้วยไฟ AC เฟสเดียว โดยอาศัยหลักการทรานส์ฟอร์เมอร์เหนี่ยวนำแรงดันเข้าไปในขดลวดสเตเตอร์ที่ต่อแบบ Y ทั้งสามชุด (S1, S2, S3 — วางห่างกัน 120°) ขนาดสัมพัทธ์ของแรงดันเหล่านั้นจะสอดคล้องกับตำแหน่งมุมของโรเตอร์ ทำให้มุมของเพลาถูกส่งผ่านทางไฟฟ้า",
+    explain: "หนังสืออธิบายหลักการส่งผ่านของซินโครไว้ตรง ๆ ว่า \"ขดลวดปฐมภูมิหรือทุติยภูมิจะพันอยู่บนโรเตอร์... ขนาดของแรงดันที่เหนี่ยวนำเข้าไปในขดทุติยภูมิขึ้นอยู่กับตำแหน่งมุมสัมพัทธ์ของขดปฐมภูมิ/ทุติยภูมิ\" และสำหรับทอร์กซินโครโดยเฉพาะ สเตเตอร์มี \"ขดลวดสามชุดคือ S1, S2 และ S3 วางห่างกัน 120°\" ซึ่งแรงดันที่เหนี่ยวนำได้จะไม่เท่ากันในแต่ละขด ความไม่เท่ากันนี้เองที่เข้ารหัสมุมของโรเตอร์เอาไว้" }
+},
+{ page: 166, type: "recall",
+  en: { q: "What is the code of a control transformer?",
+    a: "CT",
+    explain: "The manual's standard synchro code table lists it directly: \"CT — Control Transformer.\"" },
+  th: { q: "รหัสของคอนโทรลทรานส์ฟอร์เมอร์ (control transformer) คืออะไร?",
+    a: "CT",
+    explain: "ตารางรหัสซินโครมาตรฐานในหนังสือระบุไว้ตรงตัวว่า \"CT — Control Transformer\"" }
+}
+];
+
+/* ---------- State ---------- */
+let lang = 'en';
+let order = [];
+let optOrders = [];   // per question: shuffled option-index array (mcq only), else null
+let current = 0;
+let score = 0;
+let answered = [];
+let locked = false;
+
+function shuffleArr(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('langEn').classList.toggle('active', l === 'en');
+  document.getElementById('langTh').classList.toggle('active', l === 'th');
+  document.getElementById('hudNote').textContent = l === 'th'
+    ? 'รวมชุดปรนัย (20 ข้อ) และชุดทบทวนปากเปล่า (20 ข้อ) โดยไม่ตัดข้อที่ซ้ำกัน 5 ข้อออก'
+    : 'Multiple-choice set (20) + oral/recall set (20) merged as-is — 5 overlapping questions kept, not deduplicated.';
+  render();
+}
+
+function initQuiz(shuffle) {
+  order = shuffle ? shuffleArr(BANK.map((_, i) => i)) : BANK.map((_, i) => i);
+  optOrders = order.map(qi => {
+    const q = BANK[qi];
+    if (q.type === 'mcq') {
+      const idxs = q.en.options.map((_, i) => i);
+      return shuffle ? shuffleArr(idxs) : idxs;
+    }
+    return null;
+  });
+  current = 0;
+  score = 0;
+  answered = [];
+  locked = false;
+  document.getElementById('results').classList.remove('show');
+  render();
+}
+
+function setLabel(type) {
+  if (type === 'mcq') return lang === 'th' ? 'ปรนัย' : 'MULTIPLE CHOICE';
+  if (type === 'choice') return lang === 'th' ? 'เลือกภาพ' : 'DIAGRAM CHOICE';
+  return lang === 'th' ? 'ทบทวนปากเปล่า' : 'ORAL RECALL';
+}
+
+function render() {
+  const qIndex = order[current];
+  const q = BANK[qIndex];
+  document.getElementById('progressLabel').textContent = `Q ${current + 1} / ${BANK.length}`;
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  document.getElementById('meterFill').style.width = `${(current / BANK.length) * 100}%`;
+
+  const qd = q[lang];
+  const qEn = q.en;
+
+  let html = `<div class="card">
+    <p class="qnum"><span>QUESTION ${current + 1} · p.${q.page}</span><span class="tset">${setLabel(q.type)}</span></p>
+    <p class="qtext">${lang === 'en' ? qd.q : qEn.q}${lang === 'th' ? `<span class="th">${qd.q}</span>` : ''}</p>`;
+
+  if (q.type === 'mcq') {
+    const opts = optOrders[current];
+    html += `<div class="options" id="optionsWrap">`;
+    opts.forEach((origIdx, i) => {
+      const letter = String.fromCharCode(97 + i);
+      const textEn = qEn.options[origIdx];
+      const textTh = q.th.options[origIdx];
+      html += `<button class="opt" data-orig="${origIdx}" onclick="selectOption(${origIdx})">
+        <span class="k">${letter})</span>
+        <span class="body">${textEn}${lang === 'th' ? `<span class="th">${textTh}</span>` : ''}</span>
+      </button>`;
+    });
+    html += `</div>
+      <div class="feedback" id="feedback">
+        <span class="lbl" id="fbLabel"></span>
+        <span id="fbTextEn"></span>
+        <div class="exp-th" id="fbTextTh" style="display:none;"></div>
+        <div class="cite" id="fbCite"></div>
+      </div>
+      <div class="nav-row"><button class="next-btn" id="nextBtn" onclick="nextQuestion()">${current === BANK.length - 1 ? (lang==='th'?'ดูผลลัพธ์ →':'See Results →') : (lang==='th'?'ข้อถัดไป →':'Next →')}</button></div>
+    </div>`;
+  } else if (q.type === 'choice') {
+    html += `<div class="svg-options" id="choiceWrap">`;
+    q.choices.forEach((c, i) => {
+      const letter = String.fromCharCode(65 + i);
+      html += `<button class="svgopt" data-idx="${i}" onclick="selectChoice(${i})">
+        ${transistorSVG(c.top, c.mid, c.bot)}
+        <span class="lab">( ${letter} )</span>
+      </button>`;
+    });
+    html += `</div>
+      <div class="answer-block" id="answerBlock">
+        <p class="ans-label" id="fbLabel2"></p>
+        <div class="exp-block">
+          <span>${qEn.explain}</span>
+          ${lang === 'th' ? `<span class="th">${q.th.explain}</span>` : ''}
+        </div>
+        <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}</div>
+      </div>
+      <div class="nav-row"><button class="next-btn" id="nextBtn" onclick="nextQuestion()">${current === BANK.length - 1 ? (lang==='th'?'ดูผลลัพธ์ →':'See Results →') : (lang==='th'?'ข้อถัดไป →':'Next →')}</button></div>
+    </div>`;
+  } else {
+    // recall
+    html += `
+      <div class="reveal-row" id="revealRow">
+        <button class="reveal-btn" onclick="revealAnswer()">${lang === 'th' ? 'เฉลยคำตอบ ↓' : 'Reveal Answer ↓'}</button>
+      </div>
+      <div class="answer-block" id="answerBlock">
+        <p class="ans-label">${lang === 'th' ? 'คำตอบ' : 'MODEL ANSWER'}</p>
+        <p class="ans-main">${qEn.a}${lang === 'th' ? `<span class="th">${qd.a}</span>` : ''}</p>
+        <div class="exp-block">
+          <span>${qEn.explain}</span>
+          ${lang === 'th' ? `<span class="th">${qd.explain}</span>` : ''}
+        </div>
+        <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}</div>
+        <div class="self-mark-row">
+          <button class="mark-btn got" onclick="selfMark(true)">✓ ${lang === 'th' ? 'ตอบถูก' : "I knew this"}</button>
+          <button class="mark-btn missed" onclick="selfMark(false)">✗ ${lang === 'th' ? 'ตอบพลาด' : 'I missed this'}</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('quizArea').innerHTML = html;
+  locked = false;
+}
+
+/* ---- MCQ ---- */
+function selectOption(origIdx) {
+  if (locked) return;
+  locked = true;
+  const qIndex = order[current];
+  const q = BANK[qIndex];
+  const correct = origIdx === q.correctIndex;
+  if (correct) score++;
+  answered.push({ questionRefIdx: qIndex, type: 'mcq', chosenOrig: origIdx, correctOrig: q.correctIndex, wasCorrect: correct });
+
+  const buttons = document.querySelectorAll('#optionsWrap .opt');
+  buttons.forEach(btn => {
+    const bo = parseInt(btn.getAttribute('data-orig'), 10);
+    btn.disabled = true;
+    if (bo === q.correctIndex) btn.classList.add('correct');
+    else if (bo === origIdx) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show', correct ? 'ok' : 'bad');
+  document.getElementById('fbLabel').textContent = correct
+    ? (lang === 'th' ? 'ถูกต้อง' : 'CORRECT')
+    : (lang === 'th' ? 'ไม่ถูกต้อง' : 'INCORRECT');
+  document.getElementById('fbTextEn').textContent = q.en.explain;
+  const fbTh = document.getElementById('fbTextTh');
+  fbTh.textContent = q.th.explain;
+  fbTh.style.display = 'block';
+  document.getElementById('fbCite').textContent = `Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}`;
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+/* ---- Diagram choice ---- */
+function selectChoice(idx) {
+  if (locked) return;
+  locked = true;
+  const qIndex = order[current];
+  const q = BANK[qIndex];
+  const correct = idx === q.correctIndex;
+  if (correct) score++;
+  answered.push({ questionRefIdx: qIndex, type: 'choice', wasCorrect: correct });
+
+  const buttons = document.querySelectorAll('#choiceWrap .svgopt');
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correctIndex) btn.classList.add('correct');
+    else if (i === idx) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+
+  document.getElementById('fbLabel2').textContent = correct
+    ? (lang === 'th' ? 'ถูกต้อง' : 'CORRECT')
+    : (lang === 'th' ? 'ไม่ถูกต้อง' : 'INCORRECT');
+  document.getElementById('answerBlock').classList.add('show');
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+/* ---- Recall (reveal / self-mark) ---- */
+function revealAnswer() {
+  document.getElementById('revealRow').style.display = 'none';
+  document.getElementById('answerBlock').classList.add('show');
+}
+
+function selfMark(knew) {
+  if (locked) return;
+  locked = true;
+  const qIndex = order[current];
+  if (knew) score++;
+  answered.push({ questionRefIdx: qIndex, type: 'recall', wasCorrect: knew });
+  document.getElementById('scoreLabel').textContent = `${score} correct`;
+  setTimeout(nextQuestion, 150);
+}
+
+function nextQuestion() {
+  if (current < BANK.length - 1) {
+    current++;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('meterFill').style.width = '100%';
+  document.getElementById('quizArea').innerHTML = '';
+  const pct = Math.round((score / BANK.length) * 100);
+  const pass = pct >= 75;
+  document.getElementById('results').classList.add('show');
+  document.getElementById('resultTag').textContent = lang === 'th' ? 'ผลการทดสอบ' : 'RESULT';
+  const sb = document.getElementById('scoreBig');
+  sb.textContent = `${score} / ${BANK.length}`;
+  sb.className = 'score-big ' + (pass ? 'pass' : 'fail');
+  document.getElementById('scorePct').textContent = `${pct}%`;
+  const badge = document.getElementById('passBadge');
+  badge.textContent = pass ? (lang === 'th' ? 'ผ่าน' : 'PASS') : (lang === 'th' ? 'ไม่ผ่าน' : 'FAIL');
+  badge.className = 'badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('thresholdNote').textContent = lang === 'th' ? 'เกณฑ์ผ่าน: 75%' : 'Pass threshold: 75%';
+  document.getElementById('reviewTitle').textContent = lang === 'th' ? '— รายการเฉลยทั้งหมด —' : '— FULL ANSWER REVIEW —';
+
+  let html = '';
+  answered.forEach((a, i) => {
+    const q = BANK[a.questionRefIdx];
+    const qd = q[lang];
+    const qEn = q.en;
+    let ansText;
+    if (a.type === 'mcq') {
+      ansText = lang === 'th' ? q.th.options[a.correctOrig] : q.en.options[a.correctOrig];
+    } else if (a.type === 'choice') {
+      ansText = lang === 'th' ? 'ภาพ A (ดูคำอธิบาย)' : 'Picture A (see explanation)';
+    } else {
+      ansText = lang === 'en' ? qEn.a : qd.a;
+    }
+    html += `<div class="review-item">
+      <p class="rq"><span class="rmark ${a.wasCorrect ? 'correct-mark' : 'wrong-mark'}">${a.wasCorrect ? '✓' : '✗'}</span>${i + 1}. ${lang==='en'?qEn.q:qd.q}</p>
+      <p class="ra">${lang==='th'?'คำตอบที่ถูกต้อง':'Correct answer'}: <b>${ansText}</b></p>
+      <p class="rexp">${lang==='en'?q.en.explain:q.th.explain}</p>
+      <div class="cite">Module 4 — Electronic Fundamentals CAT-B1.pdf, p.${q.page}</div>
+    </div>`;
+  });
+  document.getElementById('reviewList').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartQuiz(shuffle) {
+  initQuiz(shuffle);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+initQuiz(true);
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Module 4 — Study Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090b; --panel: #0e1316; --panel-2: #121820; --line: #223038;
+    --amber: #ffb020; --amber-dim: #8a5f18; --cyan: #35e6e0; --cyan-dim: #1a6e6b;
+    --red: #ff4d4d; --text: #d9e4e6; --text-dim: #7d9296;
+    --font-head: 'Chakra Petch', 'Sarabun', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Sarabun', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+      --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1ee; --panel: #ffffff; --panel-2: #f4f6f4;
+    --line: #c6cdc6; --text: #16211f; --text-dim: #55625f;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--font-body);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px; background-attachment: fixed; background-position: center;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,176,32,0.06), transparent 60%);
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 22px 16px 48px; }
+
+  .hud {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border-radius: var(--radius); padding: 20px 18px; margin-bottom: 20px;
+    text-align: center;
+  }
+  .hud-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--cyan); margin: 0 0 6px; }
+  .hud-title { font-family: var(--font-head); font-weight: 700; font-size: 26px; line-height: 1.2; margin: 0; color: var(--text); }
+  .hud-title .th { display: block; font-family: 'Sarabun', sans-serif; font-size: 15px; font-weight: 400; color: var(--text-dim); margin-top: 6px; }
+
+  .sect-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--amber); margin: 22px 4px 10px; }
+
+  .card-link { text-decoration: none; display: block; }
+  .card {
+    border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius);
+    padding: 16px 18px; margin-bottom: 12px; display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color .15s ease, transform .1s ease;
+  }
+  .card:hover { border-color: var(--amber-dim); transform: translateY(-1px); }
+  .card .emoji { font-size: 26px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .card .body { flex: 1; min-width: 0; }
+  .card .top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .card h2 { font-family: var(--font-head); font-size: 17px; font-weight: 600; margin: 0; color: var(--text); }
+  .card .count { font-family: var(--font-mono); font-size: 11px; color: var(--cyan); border: 1px solid var(--cyan-dim); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+  .card .count.warn { color: var(--red); border-color: var(--red); }
+  .card p { margin: 6px 0 0; font-size: 13.5px; color: var(--text-dim); line-height: 1.55; }
+  .card p.th { font-family: 'Sarabun', sans-serif; margin-top: 4px; }
+  .card .go { font-family: var(--font-mono); font-size: 11px; color: var(--amber); margin-top: 8px; display: inline-block; }
+
+  .src-card {
+    border: 1px solid var(--line); background: var(--panel-2); border-radius: var(--radius);
+    padding: 14px 16px; margin-top: 4px; font-size: 12.5px; color: var(--text-dim); line-height: 1.7;
+  }
+  .src-card b { color: var(--text); font-weight: 500; }
+  .src-card .th { display: block; font-family: 'Sarabun', sans-serif; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+  footer { margin-top: 26px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.04em; }
+
+  @media (max-width: 420px) {
+    .hud-title { font-size: 21px; }
+    .card h2 { font-size: 15.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hud">
+    <p class="hud-tag">PART66 · CAT-B1 · MODULE 4 — ELECTRONIC FUNDAMENTALS</p>
+    <h1 class="hud-title">Study Hub
+      <span class="th">ศูนย์รวมชุดทบทวน Module 4 — ทุกไฟล์ในที่เดียว</span>
+    </h1>
+  </div>
+
+  <p class="sect-title">— PRACTICE SETS · ชุดฝึกทำข้อสอบ —</p>
+
+  <a class="card-link" href="mcq-mock-test.html" target="_blank" rel="noopener">
+    <div class="card">
+      <span class="emoji">🎯</span>
+      <div class="body">
+        <div class="top-row"><h2>MCQ Mock Test</h2><span class="count">20 Q</span></div>
+        <p>Multiple-choice, 3 options each, from the first photographed question sheet. Fisher–Yates shuffle on every retake, 75% pass line. Covers semiconductors, diodes, transistors, op-amps, PCB/raster/Vero boards, and synchros.</p>
+        <p class="th">ปรนัย 3 ตัวเลือก จากภาพชุดแรก สลับข้อและตัวเลือกทุกครั้ง เกณฑ์ผ่าน 75% ครอบคลุมสารกึ่งตัวนำ ไดโอด ทรานซิสเตอร์ ออปแอมป์ แผ่นวงจร และซินโคร</p>
+        <span class="go">Open →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card-link" href="oral-review.html" target="_blank" rel="noopener">
+    <div class="card">
+      <span class="emoji">🎙️</span>
+      <div class="body">
+        <div class="top-row"><h2>Oral / Recall Review</h2><span class="count">20 Q</span></div>
+        <p>Open-ended verbal-exam style questions from the second photographed sheet. Reveal-answer + self-mark flashcard flow, plus one diagram-choice question (transistor lead labeling). Now includes cross-check notes on 4 items — see below.</p>
+        <p class="th">คำถามปากเปล่าจากภาพชุดที่สอง แบบเฉลย+ประเมินตัวเอง มีข้อเลือกภาพ 1 ข้อ (ติดฉลากขาทรานซิสเตอร์) ตอนนี้มีหมายเหตุเทียบเฉลยแทรกไว้ใน 4 ข้อแล้ว (ดูด้านล่าง)</p>
+        <span class="go">Open →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card-link" href="combined-40.html" target="_blank" rel="noopener">
+    <div class="card">
+      <span class="emoji">🗂️</span>
+      <div class="body">
+        <div class="top-row"><h2>Combined Set</h2><span class="count">40 Q</span></div>
+        <p>Both sets above merged into one file, in their original form — the 5 overlapping questions are kept, not deduplicated. Mixes MCQ, diagram-choice, and oral-recall question types in one shuffled run.</p>
+        <p class="th">รวมสองชุดข้างต้นเป็นไฟล์เดียว โดยไม่ตัดข้อที่ซ้ำกัน 5 ข้อออก มีทั้งปรนัย เลือกภาพ และปากเปล่าปนกันในชุดเดียว</p>
+        <span class="go">Open →</span>
+      </div>
+    </div>
+  </a>
+
+  <p class="sect-title">— QUALITY CHECK · ตรวจสอบความถูกต้อง —</p>
+
+  <a class="card-link" href="answerkey-check.html" target="_blank" rel="noopener">
+    <div class="card">
+      <span class="emoji">🩺</span>
+      <div class="body">
+        <div class="top-row"><h2>Answer-Key Accuracy Check</h2><span class="count warn">4 / 20 flagged</span></div>
+        <p>Cross-checks a separate answer-key PDF (<i>Module4_Final.pdf</i>) against the textbook, page by page. 16 of 20 match; 4 are wrong or incomplete — including one that states the exact opposite of the book. Bilingual side-by-side comparison cards.</p>
+        <p class="th">เทียบไฟล์เฉลยอีกชุดหนึ่ง (<i>Module4_Final.pdf</i>) กับตำราทีละหน้า ตรงกัน 16 ข้อ ผิดหรือไม่ครบ 4 ข้อ (มี 1 ข้อตอบตรงข้ามกับตำราเลย) การ์ดเทียบสองภาษาให้อ่านง่าย</p>
+        <span class="go">Open →</span>
+      </div>
+    </div>
+  </a>
+
+  <p class="sect-title">— SOURCE MATERIAL · ที่มาของข้อมูล —</p>
+  <div class="src-card">
+    All practice questions are drawn from photographed exam-prep sheets; every answer and explanation is checked against <b>Module_4_Electronic_Fundamentals_CAT-B1.pdf</b> (176 pages, AERO-Bildung / EASA Part-66 CAT B1 training material), with a page reference on every item.
+    <span class="th">คำถามทั้งหมดมาจากภาพชุดข้อสอบที่ถ่ายมา ส่วนคำตอบและคำอธิบายทุกข้อตรวจสอบกับ <b>Module_4_Electronic_Fundamentals_CAT-B1.pdf</b> (176 หน้า เอกสารฝึกอบรม EASA Part-66 CAT B1 ของ AERO-Bildung) พร้อมอ้างอิงเลขหน้ากำกับทุกข้อ</span>
+  </div>
+
+  <footer>
+    Module 4 — Electronic Fundamentals · updated as new question sets and checks are added
+  </footer>
+</div>
+</body>
+</html>
